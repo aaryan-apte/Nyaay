@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134288487187",
+    "project_id": "nyaay-flutter",
+    "storage_bucket": "nyaay-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134288487187:android:bfc49187dfed950728a0e6",
+        "android_client_info": {
+          "package_name": "com.example.nyaay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmDMTvFX2z9RQPuVqAMHzxjVIzFSGdP6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
