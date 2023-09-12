@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../pages/home.dart';
+import 'login.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({super.key});
@@ -67,7 +68,7 @@ class _MyRegisterState extends State<MyRegister> {
         Future.delayed(const Duration(seconds: 2), () {
           ScaffoldMessenger.of(context).clearSnackBars();
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Ram()));
+              context, MaterialPageRoute(builder: (context) => TestHome()));
         });
       });
     }).onError((error, stackTrace) {
@@ -269,7 +270,8 @@ class _MyRegisterState extends State<MyRegister> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyLogin()
+                        ));
                       },
                       child: Text(
                         'Log In',

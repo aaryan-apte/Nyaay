@@ -1,18 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/authentication/first_screen.dart';
 import 'package:nyaay/authentication/willpop_checker_user.dart';
 
 import '../pages/home.dart';
 
-class MyLogin extends StatefulWidget {
-
-  const MyLogin({Key? key}) : super(key: key);
+class ServiceLogin extends StatefulWidget {
+  const ServiceLogin({Key? key}) : super(key: key);
 
   @override
-  State<MyLogin> createState() => _MyLogin1State();
+  State<ServiceLogin> createState() => _MyLogin1State();
 }
 
-class _MyLogin1State extends State<MyLogin> {
+class _MyLogin1State extends State<ServiceLogin> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   TextStyle textStyle = const TextStyle(fontFamily: 'CrimsonText-Regular.ttf');
@@ -36,14 +36,11 @@ class _MyLogin1State extends State<MyLogin> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 90
-              ),
-              const SizedBox(
-                height: 45.0
-              ),
+              const SizedBox(height: 190),
+              const SizedBox(height: 45.0),
               const Text(
-                'Save More with MyMoney',
+                'Thank you for your continued service🙏',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'CrimsonText',
                   // fontStyle: FontStyle.italic,
@@ -65,11 +62,9 @@ class _MyLogin1State extends State<MyLogin> {
                 decoration: const InputDecoration(
                     labelText: "Email",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0)),
+                        TextStyle(color: Colors.black54, fontSize: 18.0)),
               ),
-              const SizedBox(
-                height: 5
-              ),
+              const SizedBox(height: 5),
               TextField(
                 style: const TextStyle(
                   color: Colors.black,
@@ -82,18 +77,16 @@ class _MyLogin1State extends State<MyLogin> {
                 decoration: const InputDecoration(
                     labelText: "Password",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0)),
+                        TextStyle(color: Colors.black54, fontSize: 18.0)),
               ),
-              const SizedBox(
-                height: 30
-              ),
+              const SizedBox(height: 30),
               SizedBox(
                 height: 50.0,
                 width: 150.0,
                 child: ElevatedButton.icon(
                   style: ButtonStyle(
                     backgroundColor:
-                    MaterialStateProperty.all(Colors.blue[900]),
+                        MaterialStateProperty.all(Colors.blue[900]),
                   ),
                   onPressed: () {
                     logIn();
@@ -108,9 +101,7 @@ class _MyLogin1State extends State<MyLogin> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20.0
-              ),
+              const SizedBox(height: 20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -143,6 +134,15 @@ class _MyLogin1State extends State<MyLogin> {
                   ),
                 ],
               ),
+              // CircleAvatar(
+              //   child: TextButton(
+              //     child: Icon(Icons.arrow_back_ios_new),
+              //     onPressed: () {
+              //       Navigator.pushReplacement(context,
+              //           MaterialPageRoute(builder: (context) => FirstPage()));
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),
