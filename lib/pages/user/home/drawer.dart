@@ -39,7 +39,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.shopping_basket,
+                leading: Icon(Icons.account_circle,
                     color: Theme.of(context).colorScheme.secondary),
                 title: Text('Profile'),
                 trailing: Text('New',
@@ -51,7 +51,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               ListTile(
                 leading:
-                    Icon(Icons.category, color: Theme.of(context).colorScheme.secondary),
+                    Icon(Icons.account_balance_wallet_rounded, color: Theme.of(context).colorScheme.secondary),
                 title: Text('Appointments'),
                 onTap: () {
                   Navigator.pop(context);
@@ -60,7 +60,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               ListTile(
                 leading:
-                    Icon(Icons.favorite, color: Theme.of(context).colorScheme.secondary),
+                    Icon(Icons.align_vertical_bottom, color: Theme.of(context).colorScheme.secondary),
                 title: Text('Leaderboard'),
                 trailing: Container(
                   padding: const EdgeInsets.all(10.0),
@@ -77,7 +77,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.shopping_cart,
+                leading: Icon(Icons.approval_rounded,
                     color: Theme.of(context).colorScheme.secondary),
                 title: Text('Why Nyaay?'),
                 trailing: Container(

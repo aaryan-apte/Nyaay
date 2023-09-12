@@ -13,12 +13,12 @@ class Home1 extends StatefulWidget {
 
 class _Home1State extends State<Home1> {
   final List<String> imgList = [
-    'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
-    'https://in.pinterest.com/pin/596586281913615172/',
-    'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
-    'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
-    'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
-    'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
+    // 'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
+    // 'https://in.pinterest.com/pin/596586281913615172/',
+    // 'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
+    // 'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
+    // 'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
+    // 'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
     // 'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
     // 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
     // 'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
@@ -295,10 +295,10 @@ class _Home1State extends State<Home1> {
                                 child: Center(
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          primary: Theme.of(context).colorScheme.secondary,
+                                          primary: Color.fromARGB(255, 35, 20, 1),
                                       ),
                                       child: const Text('View Appoinments',
-                                          style: TextStyle(color: Colors.white)),
+                                          style: TextStyle(color: Colors.white, fontSize: 18)),
                                       onPressed: () {
                                         Navigator.pushNamed(context, '/categorise');
                                       }),
