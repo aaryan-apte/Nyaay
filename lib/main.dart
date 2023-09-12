@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nyaay/authentication/login.dart';
 import 'package:nyaay/authentication/signup.dart';
+
+import 'package:nyaay/pages/home/home1.dart';
 // import 'package:nyaay/pages/home.dart';
 import 'firebase_options.dart';
 

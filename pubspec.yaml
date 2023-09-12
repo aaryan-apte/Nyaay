@@ -11,12 +11,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
+  intl: 0.18.1
+  carousel_slider: ^4.0.0
+  cached_network_image: ^3.0.0  
   cupertino_icons: ^1.0.2
   firebase_core: ^2.15.1
   firebase_auth: ^4.9.0
   email_validator: ^2.1.17
   cloud_firestore: ^4.9.1
+  file: ^7.0.0
+  flutter_rating_stars: ^1.0.3+4
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:
