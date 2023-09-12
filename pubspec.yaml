@@ -49,11 +49,18 @@ flutter:
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
+  assets:
+    - assets/i18n/en.json
+    - assets/i18n/ar.json
+    - assets/images/drawer-header.jpg
+    - assets/images/
+
   fonts:
     - family: CrimsonText
       fonts:
         - asset: assets/fonts/CrimsonText-Regular.ttf
         - asset: assets/fonts/CrimsonText-BoldItalic.ttf
+    
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

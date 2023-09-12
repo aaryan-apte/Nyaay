@@ -41,7 +41,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 leading: Icon(Icons.shopping_basket,
                     color: Theme.of(context).colorScheme.secondary),
-                title: Text('Shop'),
+                title: Text('Profile'),
                 trailing: Text('New',
                     style: TextStyle(color: Theme.of(context).primaryColor)),
                 onTap: () {
@@ -52,7 +52,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 leading:
                     Icon(Icons.category, color: Theme.of(context).colorScheme.secondary),
-                title: Text('Categorise'),
+                title: Text('Appointments'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/categorise');
@@ -61,7 +61,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 leading:
                     Icon(Icons.favorite, color: Theme.of(context).colorScheme.secondary),
-                title: Text('My Wishlist'),
+                title: Text('Leaderboard'),
                 trailing: Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: new BoxDecoration(
@@ -79,7 +79,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 leading: Icon(Icons.shopping_cart,
                     color: Theme.of(context).colorScheme.secondary),
-                title: Text('My Cart'),
+                title: Text('Why Nyaay?'),
                 trailing: Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: new BoxDecoration(
