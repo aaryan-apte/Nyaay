@@ -13,6 +13,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // final Locale locale = Locale('en');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -20,9 +21,13 @@ Future<void> main() async {
     MaterialApp(
       home: const AuthStart(),
       // home: const Authenticate2(),
+
       theme: ThemeData(
+        primaryColor: Colors.deepOrange.shade500,
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: Color.fromARGB(255, 69, 0, 114)),
         fontFamily: 'CrimsonText',
-      ),
+      ), 
     ),
   );
 }
