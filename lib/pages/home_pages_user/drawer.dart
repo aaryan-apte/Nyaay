@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_ecommerce_ui_kit/blocks/auth_block.dart';
 import 'package:provider/provider.dart';
+
+import '../../authentication/first_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -116,8 +120,13 @@ class _AppDrawerState extends State<AppDrawer> {
                 leading: Icon(Icons.exit_to_app,
                     color: Theme.of(context).colorScheme.secondary),
                 title: Text('Logout'),
-                onTap: () async {
-                  // await auth.logout();
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => FirstPage(),
+                    ),
+                  );
                 },
               )
             ],

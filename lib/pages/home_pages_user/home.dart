@@ -1,16 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/localizations.dart';
-
 import 'drawer.dart';
 import 'slider.dart';
 
-class Home1 extends StatefulWidget {
+class HomeU extends StatefulWidget {
+  const HomeU({super.key});
+
   @override
-  _Home1State createState() => _Home1State();
+  _HomeUState createState() => _HomeUState();
 }
 
-class _Home1State extends State<Home1> {
+class _HomeUState extends State<HomeU> {
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
@@ -38,7 +39,7 @@ class _Home1State extends State<Home1> {
                 // pinned: true,
                 actions: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.shopping_cart),
+                    icon: const Icon(Icons.shopping_cart),
                     onPressed: () {},
                   )
                 ],
@@ -59,11 +60,12 @@ class _Home1State extends State<Home1> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding:
-                            EdgeInsets.only(top: 14.0, left: 8.0, right: 8.0),
+                        padding: const EdgeInsets.only(
+                            top: 14.0, left: 8.0, right: 8.0),
                         child: Text(
-                            AppLocalizations.of(context)!
-                                .translate('NEW_ARRIVALS') ?? '',
+                            AppLocalizations.of(context)
+                                    ?.translate('NEW_ARRIVALS') ??
+                                '',
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.secondary,
                                 fontSize: 18,
@@ -99,12 +101,12 @@ class _Home1State extends State<Home1> {
                                                 fit: BoxFit.cover,
                                                 imageUrl: i,
                                                 placeholder: (context, url) =>
-                                                    Center(
+                                                    const Center(
                                                         child:
                                                             CircularProgressIndicator()),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        new Icon(Icons.error),
+                                                        const Icon(Icons.error),
                                               ),
                                             ),
                                           ),
@@ -116,7 +118,8 @@ class _Home1State extends State<Home1> {
                                             subtitle: Text('\$200',
                                                 style: TextStyle(
                                                     color: Theme.of(context)
-                                                        .colorScheme.secondary,
+                                                        .colorScheme
+                                                        .secondary,
                                                     fontWeight:
                                                         FontWeight.w700)),
                                           )
@@ -131,7 +134,7 @@ class _Home1State extends State<Home1> {
                         ),
                       ),
                       Container(
-                        child: Padding(
+                        child: const Padding(
                           padding:
                               EdgeInsets.only(top: 6.0, left: 8.0, right: 8.0),
                           child: Image(
@@ -142,13 +145,14 @@ class _Home1State extends State<Home1> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
+                        children: [
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 top: 8.0, left: 8.0, right: 8.0),
                             child: Text('Shop By Category',
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700)),
                           ),
@@ -157,9 +161,8 @@ class _Home1State extends State<Home1> {
                                 right: 8.0, top: 8.0, left: 8.0),
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Theme.of(context).primaryColor
-                                ),
-                                child: Text('View All',
+                                    backgroundColor: Theme.of(context).primaryColor),
+                                child: const Text('View All',
                                     style: TextStyle(color: Colors.white)),
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/categorise');
@@ -167,64 +170,57 @@ class _Home1State extends State<Home1> {
                           )
                         ],
                       ),
-                      Container(
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          crossAxisCount: 2,
-                          padding: EdgeInsets.only(
-                              top: 8, left: 6, right: 6, bottom: 12),
-                          children: List.generate(4, (index) {
-                            return Container(
-                              child: Card(
-                                clipBehavior: Clip.antiAlias,
-                                child: InkWell(
-                                  onTap: () {
-                                    print('Card tapped.');
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      SizedBox(
-                                        height:
-                                            (MediaQuery.of(context).size.width /
-                                                    2) -
-                                                70,
-                                        width: double.infinity,
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: imgList[index],
-                                          placeholder: (context, url) => Center(
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        padding: const EdgeInsets.only(
+                            top: 8, left: 6, right: 6, bottom: 12),
+                        children: List.generate(4, (index) {
+                          return Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              onTap: () {
+                                print('Card tapped.');
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: (MediaQuery.of(context).size.width /
+                                            2) -
+                                        70,
+                                    width: double.infinity,
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl: imgList[index],
+                                      placeholder: (context, url) =>
+                                          const Center(
                                               child:
                                                   CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              new Icon(Icons.error),
-                                        ),
-                                      ),
-                                      ListTile(
-                                          title: Text(
-                                        'Two Gold Rings',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16),
-                                      ))
-                                    ],
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
                                   ),
-                                ),
+                                  const ListTile(
+                                      title: Text(
+                                    'Two Gold Rings',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16),
+                                  ))
+                                ],
                               ),
-                            );
-                          }),
-                        ),
+                            ),
+                          );
+                        }),
                       ),
-                      Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: 6.0, left: 8.0, right: 8.0, bottom: 10),
-                          child: Image(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/banner-2.png'),
-                          ),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                            top: 6.0, left: 8.0, right: 8.0, bottom: 10),
+                        child: Image(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/banner-2.png'),
                         ),
                       )
                     ],

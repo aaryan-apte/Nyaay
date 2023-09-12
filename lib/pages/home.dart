@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Ram extends StatefulWidget {
-  const Ram({Key? key}) : super(key: key);
+class TestHome extends StatefulWidget {
+  const TestHome({Key? key}) : super(key: key);
 
   @override
-  State<Ram> createState() => _RamState();
+  State<TestHome> createState() => _TestHomeState();
 }
 
-class _RamState extends State<Ram> {
+class _TestHomeState extends State<TestHome> {
 
   Future<List<DocumentSnapshot>> fetchLawyers() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -18,6 +18,10 @@ class _RamState extends State<Ram> {
         .get();
 
     return querySnapshot.docs;
+  }
+
+  void signOut(){
+    FirebaseAuth.instance.signOut();
   }
 
   @override
@@ -63,10 +67,12 @@ class _RamState extends State<Ram> {
             ),
           ),
           TextButton(
+            style: TextButton.styleFrom(backgroundColor: Colors.red),
               onPressed: (){
-            FirebaseAuth.instance.signOut();
+              signOut();
             },
-              child: const Text("Sign Out"))
+              child: const Text("Sign Out")
+          )
         ],
       )
 
