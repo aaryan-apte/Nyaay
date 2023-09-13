@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/authentication/user_signup.dart';
 import 'package:nyaay/authentication/willpop_checker_user.dart';
 
-import '../pages/home.dart';
+// import '../pages/home.dart';
 
 class UserLogin extends StatefulWidget {
 
@@ -137,7 +138,7 @@ class _MyLogin1State extends State<UserLogin> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TestHome(),
+                            builder: (context) => RegisterUser(),
                           ),
                         );
                       },

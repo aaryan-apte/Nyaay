@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../authentication/user_signup.dart';
+
 class TestHome extends StatefulWidget {
   const TestHome({Key? key}) : super(key: key);
 
@@ -70,6 +72,7 @@ class _TestHomeState extends State<TestHome> {
             style: TextButton.styleFrom(backgroundColor: Colors.red),
               onPressed: (){
               signOut();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegisterUser()));
             },
               child: const Text("Sign Out")
           )
