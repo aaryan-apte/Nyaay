@@ -3,9 +3,12 @@
 // ignore_for_file: prefer_const_constructors
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/pages/user/services/arbitrators.dart';
 import 'package:nyaay/pages/user/services/lawyers.dart';
 // import 'package:nyaay/localizations.dart';
 
+import '../services/mediators.dart';
+import '../services/notaries.dart';
 import 'drawer.dart';
 import 'slider.dart';
 
@@ -129,135 +132,156 @@ class _HomeUState extends State<HomeU> {
                                   )
                                 ],
                               ),
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>UserLawyer()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserLawyer()));
                               },
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 140.0,
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            // onTap: () {
-                            //   Navigator.pushNamed(
-                            //       context, '/products',
-                            //       arguments: i);
-                            // },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  height: 60,
-                                  child: Image(
-                                    // fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/document.png'),
-                                    // placeholder: (context, url) =>
-                                    //     Center(
-                                    //         child:
-                                    //             CircularProgressIndicator()),
-                                    // errorWidget:
-                                    //     (context, url, error) =>
-                                    //         new Icon(Icons.error),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Center(
-                                    child: Text(
-                                      'Notary',
-                                      style: TextStyle(fontSize: 22),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserNotary())),
+                        child: SizedBox(
+                          width: 140.0,
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              // onTap: () {
+                              //   Navigator.pushNamed(
+                              //       context, '/products',
+                              //       arguments: i);
+                              // },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/document.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
                                     ),
                                   ),
-                                )
-                              ],
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Notary',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 140.0,
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            // onTap: () {
-                            //   Navigator.pushNamed(
-                            //       context, '/products',
-                            //       arguments: i);
-                            // },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  height: 60,
-                                  child: Image(
-                                    // fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/intermediary.png'),
-                                    // placeholder: (context, url) =>
-                                    //     Center(
-                                    //         child:
-                                    //             CircularProgressIndicator()),
-                                    // errorWidget:
-                                    //     (context, url, error) =>
-                                    //         new Icon(Icons.error),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Center(
-                                    child: Text(
-                                      'Mediator',
-                                      style: TextStyle(fontSize: 22),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserMediator())),
+                        child: SizedBox(
+                          width: 140.0,
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              // onTap: () {
+                              //   Navigator.pushNamed(
+                              //       context, '/products',
+                              //       arguments: i);
+                              // },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/intermediary.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
                                     ),
                                   ),
-                                )
-                              ],
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Mediator',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 140.0,
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            // onTap: () {
-                            //   Navigator.pushNamed(
-                            //       context, '/products',
-                            //       arguments: i);
-                            // },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  height: 60,
-                                  child: Image(
-                                    // fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/agreement.png'),
-                                    // placeholder: (context, url) =>
-                                    //     Center(
-                                    //         child:
-                                    //             CircularProgressIndicator()),
-                                    // errorWidget:
-                                    //     (context, url, error) =>
-                                    //         new Icon(Icons.error),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Center(
-                                    child: Text(
-                                      'Arbitrator',
-                                      style: TextStyle(fontSize: 22),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserArbitrator())),
+                        child: SizedBox(
+                          width: 140.0,
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              // onTap: () {
+                              //   Navigator.pushNamed(
+                              //       context, '/products',
+                              //       arguments: i);
+                              // },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/agreement.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
                                     ),
                                   ),
-                                )
-                              ],
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Arbitrator',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
