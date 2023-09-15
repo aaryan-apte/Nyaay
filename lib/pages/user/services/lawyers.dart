@@ -2,6 +2,7 @@
 //category like
 import 'package:flutter/material.dart';
 import 'districts.dart';
+import 'find_lawyers.dart';
 
 class UserLawyer extends StatefulWidget {
   const UserLawyer({Key? key}) : super(key: key);
@@ -11,14 +12,15 @@ class UserLawyer extends StatefulWidget {
 }
 
 class _UserLawyerState extends State<UserLawyer> {
-
-
   List<String> indianStatesAndUTs = [
     'Andhra Pradesh',
     'Arunachal Pradesh',
     'Assam',
     'Bihar',
     'Chhattisgarh',
+    "Dadra and Nagar Haveli (UT)",
+    "Daman and Diu (UT)",
+    "Delhi (NCT)",
     'Goa',
     'Gujarat',
     'Haryana',
@@ -50,8 +52,8 @@ class _UserLawyerState extends State<UserLawyer> {
     'Puducherry (Pondicherry)'
   ];
 
-  String selectedState = 'Maharashtra'; // Initial selected stat
-  String selectedDistrict = 'Mumbai City'; // Initial selected stat
+  String selectedState = 'Select a State'; // Initial selected state
+  String selectedDistrict = 'Select a District'; // Initial selected district
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +67,11 @@ class _UserLawyerState extends State<UserLawyer> {
               onChanged: (String? newValue) {
                 setState(() {
                   selectedState = newValue!;
+                  // Reset selectedDistrict when the state changes
+                  selectedDistrict = 'Select a District';
                 });
               },
-              items: <DropdownMenuItem<String>>[
+              items: [
                 const DropdownMenuItem(
                   value: 'Select a State',
                   child: Text('Select a State'),
@@ -80,7 +84,6 @@ class _UserLawyerState extends State<UserLawyer> {
                 }).toList(),
               ],
             ),
-
             const SizedBox(height: 20.0),
             DropdownButton(
               value: selectedDistrict,
@@ -90,24 +93,38 @@ class _UserLawyerState extends State<UserLawyer> {
                 });
               },
               items: [
-                DropdownMenuItem(
+                const DropdownMenuItem(
                   value: 'Select a District',
                   child: Text('Select a District'),
                 ),
                 if (districtsMap.containsKey(selectedState))
                   ...districtsMap[selectedState.toString()]!.map((String district) {
-                    setState(() {
-                      selectedDistrict = district;
-                    });
                     return DropdownMenuItem<String>(
                       value: district,
                       child: Text(district),
                     );
                   }).toList(),
               ],
-            )
+            ),
 
-
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LawyerList(
+                    state: selectedState,
+                    district: selectedDistrict,
+                  ),
+                ),
+              ),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.brown,
+              ),
+              child: const Text(
+                "Find me Lawyers",
+                style: TextStyle(color: Colors.white, fontSize: 20.0),
+              ),
+            ),
           ],
         ),
       ),
