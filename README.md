@@ -1,7 +1,4 @@
-# nyaay
-
-A new Flutter project.
-
+# Nyaay - A One-stop App for Legal Services
 ## Getting Started
 
 This project is a starting point for a Flutter application.
