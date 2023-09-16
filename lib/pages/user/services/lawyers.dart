@@ -1,6 +1,7 @@
 //area
 //category like
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'districts.dart';
 import 'find_lawyers.dart';
 
@@ -52,6 +53,11 @@ class _UserLawyerState extends State<UserLawyer> {
     'Puducherry (Pondicherry)'
   ];
 
+  final MultiSelectController<String> _controller =
+      MultiSelectController(deSelectPerpetualSelectedItems: true);
+
+  List<String> selectedCategory = [];
+
   String selectedState = 'Select a State'; // Initial selected state
   String selectedDistrict = 'Select a District'; // Initial selected district
 
@@ -67,7 +73,6 @@ class _UserLawyerState extends State<UserLawyer> {
               onChanged: (String? newValue) {
                 setState(() {
                   selectedState = newValue!;
-                  // Reset selectedDistrict when the state changes
                   selectedDistrict = 'Select a District';
                 });
               },
@@ -76,7 +81,8 @@ class _UserLawyerState extends State<UserLawyer> {
                   value: 'Select a State',
                   child: Text('Select a State'),
                 ),
-                ...indianStatesAndUTs.map<DropdownMenuItem<String>>((String state) {
+                ...indianStatesAndUTs
+                    .map<DropdownMenuItem<String>>((String state) {
                   return DropdownMenuItem<String>(
                     value: state,
                     child: Text(state),
@@ -98,7 +104,8 @@ class _UserLawyerState extends State<UserLawyer> {
                   child: Text('Select a District'),
                 ),
                 if (districtsMap.containsKey(selectedState))
-                  ...districtsMap[selectedState.toString()]!.map((String district) {
+                  ...districtsMap[selectedState.toString()]!
+                      .map((String district) {
                     return DropdownMenuItem<String>(
                       value: district,
                       child: Text(district),
@@ -106,17 +113,48 @@ class _UserLawyerState extends State<UserLawyer> {
                   }).toList(),
               ],
             ),
-
+            const SizedBox(height: 40.0),
+            MultiSelectContainer(
+              controller: _controller,
+              maxSelectableCount: 1,
+              items: [
+                MultiSelectCard(value: 'Criminal', label: 'Criminal'),
+                MultiSelectCard(value: 'Land', label: 'Land'),
+                MultiSelectCard(value: 'Family', label: 'Family'),
+                MultiSelectCard(value: 'Civil', label: 'Civil'),
+                MultiSelectCard(value: 'Corporate', label: 'Corporate'),
+              ],
+              onChange: (List<String> selectedItems, String? selectedItem) {
+                selectedCategory = _controller.getSelectedItems();
+              },
+            ),
+            const SizedBox(height: 40.0),
             TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LawyerList(
-                    state: selectedState,
-                    district: selectedDistrict,
-                  ),
-                ),
-              ),
+              onPressed: () {
+                if (selectedCategory.isEmpty) {
+                  // Show a SnackBar if no category is selected
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Select at least one category",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LawyerList(
+                        state: selectedState,
+                        district: selectedDistrict,
+                        category: selectedCategory[0],
+                      ),
+                    ),
+                  );
+                  // print(selectedCategory);
+                }
+              },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.brown,
               ),
