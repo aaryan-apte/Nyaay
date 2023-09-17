@@ -14,7 +14,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  intl: 0.17.0
+  intl: ^0.18.1
   carousel_slider: ^4.0.0
   cached_network_image: ^3.0.0  
   cupertino_icons: ^1.0.2
