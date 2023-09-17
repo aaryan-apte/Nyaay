@@ -1,17 +1,25 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+
+// ignore_for_file: prefer_const_constructors
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/pages/user/services/arbitrators.dart';
+import 'package:nyaay/pages/user/services/lawyers.dart';
 // import 'package:nyaay/localizations.dart';
 
+import '../services/mediators.dart';
+import '../services/notaries.dart';
 import 'drawer.dart';
 import 'slider.dart';
 
-class Home1 extends StatefulWidget {
+class HomeU extends StatefulWidget {
+  const HomeU({super.key});
+
   @override
-  _Home1State createState() => _Home1State();
+  _HomeUState createState() => _HomeUState();
 }
 
-class _Home1State extends State<Home1> {
+class _HomeUState extends State<HomeU> {
   final List<String> imgList = [
     // 'https://i.pinimg.com/564x/4b/b7/b4/4bb7b4aecb1ac4cdfe53600992f455f3.jpg',
     // 'https://in.pinterest.com/pin/596586281913615172/',
@@ -32,284 +40,286 @@ class _Home1State extends State<Home1> {
         child: AppDrawer(),
       ),
       appBar: AppBar(
-        
-                // Provide a standard title.
-                // title: Text('asdas'),
-                // pinned: true,
-                // actions: <Widget>[
-                //   IconButton(
-                //     icon: Icon(Icons.shopping_cart),
-                //     onPressed: () {},
-                //   )
-                // ],
-                // Allows the user to reveal the app bar if they begin scrolling
-                // back up the list of items.
-                // floating: true,
-                // Display a placeholder widget to visualize the shrinking size.
-                flexibleSpace: HomeSlider(),
-                // Make the initial height of the SliverAppBar larger than normal.
-               toolbarHeight: 475,
-              ),
+        // Provide a standard title.
+        // title: Text('asdas'),
+        // pinned: true,
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.shopping_cart),
+        //     onPressed: () {},
+        //   )
+        // ],
+        // Allows the user to reveal the app bar if they begin scrolling
+        // back up the list of items.
+        // floating: true,
+        // Display a placeholder widget to visualize the shrinking size.
+        flexibleSpace: HomeSlider(),
+        // Make the initial height of the SliverAppBar larger than normal.
+        toolbarHeight: 475,
+      ),
       body: SafeArea(
-        top: false,
-        left: false,
-        right: false,
+        // top: false,
+        // left: false,
+        // right: false,
         child: Stack(
-          children: <Widget>[
-            
-          // Background image
-          Positioned.fill(
-             top: 0,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/images/lawbg1.jpg', // Replace with your background image path
-              fit: BoxFit.cover,
+          children: [
+            Positioned.fill(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Image.asset(
+                'assets/images/lawbg1.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-           Container(
-            color: Colors.black.withOpacity(0.9),
-            child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const Padding(
-                            padding:
-                                const EdgeInsets.only(top: 14.0, left: 8.0, right: 8.0),
-                            child: Center(
-                              child: Text(
-                                  ('LEGAL PROVIDERS'),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700)),
+            Container(
+              color: Colors.black.withOpacity(0.9),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.only(top: 14.0, left: 8.0, right: 8.0),
+                    child: Center(
+                      child: Text(('LEGAL PROVIDERS'),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700)),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    height: 170.0,
+                    child:
+                        ListView(scrollDirection: Axis.horizontal, children: [
+                      SizedBox(
+                        width: 140.0,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            // onTap: () {
+                            //   Navigator.pushNamed(
+                            //       context, '/products',
+                            //       arguments: i);
+                            // },
+                            child: GestureDetector(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/lawyer.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Lawyer',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserLawyer()));
+                              },
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            height: 170.0,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: <Widget> [
-                                Container(
-                                      width: 140.0,
-                                      child: Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        child: InkWell(
-                                          // onTap: () {
-                                          //   Navigator.pushNamed(
-                                          //       context, '/products',
-                                          //       arguments: i);
-                                          // },
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                             mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              SizedBox(
-                                              
-                                                height: 60,
-                                                child: Container(
-                                                  // tag: '$i',
-                                                  child: const Image(
-                                                    // fit: BoxFit.cover,
-                                                    image: AssetImage('assets/images/lawyer.png'),
-                                                    // placeholder: (context, url) =>
-                                                    //     Center(
-                                                    //         child:
-                                                    //             CircularProgressIndicator()),
-                                                    // errorWidget:
-                                                    //     (context, url, error) =>
-                                                    //         new Icon(Icons.error),
-                                                  ),
-                                                ),
-                                              ),
-                                              const ListTile(
-                                                title: Center(
-                                                  child: Text(
-                                                    'Lawyer',
-                                                    style: TextStyle(fontSize: 22),
-                                                    
-                                                  ),
-                                                ),
-                                                
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 140.0,
-                                      child: Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        child: InkWell(
-                                          // onTap: () {
-                                          //   Navigator.pushNamed(
-                                          //       context, '/products',
-                                          //       arguments: i);
-                                          // },
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              SizedBox(
-                                              
-                                                height: 60,
-                                                child: Container(
-                                                  // tag: '$i',
-                                                  child: const Image(
-                                                    // fit: BoxFit.cover,
-                                                    image: AssetImage('assets/images/document.png'),
-                                                    // placeholder: (context, url) =>
-                                                    //     Center(
-                                                    //         child:
-                                                    //             CircularProgressIndicator()),
-                                                    // errorWidget:
-                                                    //     (context, url, error) =>
-                                                    //         new Icon(Icons.error),
-                                                  ),
-                                                ),
-                                              ),
-                                              const ListTile(
-                                                title: Center(
-                                                  child: Text(
-                                                    'Notary',
-                                                    
-                                                    style: TextStyle(fontSize: 22),
-                                                  ),
-                                                ),
-                                                
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 140.0,
-                                      child: Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        child: InkWell(
-                                          // onTap: () {
-                                          //   Navigator.pushNamed(
-                                          //       context, '/products',
-                                          //       arguments: i);
-                                          // },
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              SizedBox(
-                                              
-                                                height: 60,
-                                                child: Container(
-                                                  // tag: '$i',
-                                                  child: const Image(
-                                                    // fit: BoxFit.cover,
-                                                    image: AssetImage('assets/images/intermediary.png'),
-                                                    // placeholder: (context, url) =>
-                                                    //     Center(
-                                                    //         child:
-                                                    //             CircularProgressIndicator()),
-                                                    // errorWidget:
-                                                    //     (context, url, error) =>
-                                                    //         new Icon(Icons.error),
-                                                  ),
-                                                ),
-                                              ),
-                                              const ListTile(
-                                                title: Center(
-                                                  child: Text(
-                                                    'Mediator',
-                                                    style: TextStyle(fontSize: 22),
-                                                  ),
-                                                ),
-                                                
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 140.0,
-                                      child: Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        child: InkWell(
-                                          // onTap: () {
-                                          //   Navigator.pushNamed(
-                                          //       context, '/products',
-                                          //       arguments: i);
-                                          // },
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              SizedBox(
-                                              
-                                                height: 60,
-                                                child: Container(
-                                                  // tag: '$i',
-                                                  child: const Image(
-                                                    // fit: BoxFit.cover,
-                                                    image: AssetImage('assets/images/agreement.png'),
-                                                    // placeholder: (context, url) =>
-                                                    //     Center(
-                                                    //         child:
-                                                    //             CircularProgressIndicator()),
-                                                    // errorWidget:
-                                                    //     (context, url, error) =>
-                                                    //         new Icon(Icons.error),
-                                                  ),
-                                                ),
-                                              ),
-                                              const ListTile(
-                                                title: Center(
-                                                  child: Text(
-                                                    'Arbitrator',
-                                                    style: TextStyle(fontSize: 22),
-                                                  ),
-                                                ),
-                                                
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                              ]
-                            ),
-                          ),
-                          // Container(
-                          //   child: const Padding(
-                          //     padding:
-                          //         EdgeInsets.only(top: 6.0, left: 8.0, right: 8.0),
-                          //     child: Image(
-                          //       fit: BoxFit.cover,
-                          //       image: AssetImage('assets/images/banner-1.png'),
-                          //     ),
-                          //   ),
-                          // ),
-                          Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 8.0, top: 8.0, left: 8.0),
-                                child: Center(
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Color.fromARGB(255, 35, 20, 1),
-                                      ),
-                                      child: const Text('View Appoinments',
-                                          style: TextStyle(color: Colors.white, fontSize: 18)),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/categorise');
-                                      }),
-                                ),
-                              )
-                        ],
+                        ),
                       ),
-          ),
-          ]
-        )
-                
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserNotary())),
+                        child: SizedBox(
+                          width: 140.0,
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              // onTap: () {
+                              //   Navigator.pushNamed(
+                              //       context, '/products',
+                              //       arguments: i);
+                              // },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/document.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Notary',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserMediator())),
+                        child: SizedBox(
+                          width: 140.0,
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              // onTap: () {
+                              //   Navigator.pushNamed(
+                              //       context, '/products',
+                              //       arguments: i);
+                              // },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/intermediary.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Mediator',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserArbitrator())),
+                        child: SizedBox(
+                          width: 140.0,
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              // onTap: () {
+                              //   Navigator.pushNamed(
+                              //       context, '/products',
+                              //       arguments: i);
+                              // },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Image(
+                                      // fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/agreement.png'),
+                                      // placeholder: (context, url) =>
+                                      //     Center(
+                                      //         child:
+                                      //             CircularProgressIndicator()),
+                                      // errorWidget:
+                                      //     (context, url, error) =>
+                                      //         new Icon(Icons.error),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        'Arbitrator',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ]),
+                  ),
+                  // Container(
+                  //   child: const Padding(
+                  //     padding:
+                  //         EdgeInsets.only(top: 6.0, left: 8.0, right: 8.0),
+                  //     child: Image(
+                  //       fit: BoxFit.cover,
+                  //       image: AssetImage('assets/images/banner-1.png'),
+                  //     ),
+                  //   ),
+                  // ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 8.0, top: 8.0, left: 8.0),
+                    child: Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 35, 20, 1),
+                        ),
+                        child: const Text('View Appointments',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/categorise');
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
