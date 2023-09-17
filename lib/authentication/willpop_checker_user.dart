@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/authentication/user_login.dart';
 import 'package:nyaay/pages/home_pages_user/home.dart';
+import 'package:nyaay/pages/user/home/home1.dart';
 // import 'login.dart';
 
 

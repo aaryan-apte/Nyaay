@@ -23,7 +23,7 @@ class _HomeSState extends State<HomeS> {
                 builder: (context) => FirstPage(),
               ),
             );
-        }, child: Text("Hare Krishna, SignOut!")),
+        }, child: Text("SignOut!")),
       ),
     );
   }
