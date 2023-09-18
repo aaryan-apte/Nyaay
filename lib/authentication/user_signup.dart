@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, use_build_context_synchronously
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaay/pages/user/home/home1.dart';
-import '../pages/home.dart';
+// import 'package:nyaay/pages/user/home/home1.dart';
 import 'login.dart';
 
 class RegisterUser extends StatefulWidget {
@@ -27,14 +28,16 @@ class _RegisterUserState extends State<RegisterUser> {
   // final districtController = TextEditingController();
   // final stateController = TextEditingController();
 
-  Future<void> addUser() async {
+  FutureOr<void> addUser() async {
     // CollectionReference users = FirebaseFirestore.instance.collection('service');
     // final FirebaseAuth auth = FirebaseAuth.instance;
     // final String? uid = auth.currentUser?.email;
     // await users.doc(uid).set({
     //   'date': DateTime.now(),
     // });
-    final ref = FirebaseFirestore.instance.collection('users').doc(emailController.text.trim());
+    final ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc(emailController.text.trim());
     await ref.set({
       "name": nameController.text.trim(),
       "email": emailController.text.trim(),
@@ -57,21 +60,14 @@ class _RegisterUserState extends State<RegisterUser> {
     });
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim())
-        .then((userCreds) {
-      addUser().then((value) {
-        setState(() {
-          _isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Account Created Successfully!")));
-        Future.delayed(const Duration(seconds: 2), () {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeU()));
-        });
+            email: emailController.text.trim(),
+            password: passwordController.text.trim())
+        .then((value) {
+      setState(() {
+        _isLoading = false;
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Account Created Successfully!")));
     }).onError((error, stackTrace) {
       setState(() {
         _isLoading = false;
@@ -120,7 +116,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   decoration: InputDecoration(
                     labelText: "Name",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0),
+                        TextStyle(color: Colors.black54, fontSize: 18.0),
                   ),
                 ),
                 SizedBox(height: 5),
@@ -134,13 +130,13 @@ class _RegisterUserState extends State<RegisterUser> {
                   textInputAction: TextInputAction.next,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
-                  email != null && !EmailValidator.validate(email, true)
-                      ? "Enter a valid email"
-                      : null,
+                      email != null && !EmailValidator.validate(email, true)
+                          ? "Enter a valid email"
+                          : null,
                   decoration: InputDecoration(
                     labelText: "Email",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0),
+                        TextStyle(color: Colors.black54, fontSize: 18.0),
                   ),
                 ),
                 TextFormField(
@@ -153,7 +149,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   decoration: InputDecoration(
                     labelText: "Profession",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0),
+                        TextStyle(color: Colors.black54, fontSize: 18.0),
                   ),
                 ),
                 TextFormField(
@@ -166,7 +162,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   decoration: InputDecoration(
                     labelText: "Phone Number",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0),
+                        TextStyle(color: Colors.black54, fontSize: 18.0),
                   ),
                 ),
                 SizedBox(height: 5),
@@ -186,7 +182,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   decoration: InputDecoration(
                     labelText: "Password",
                     labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0),
+                        TextStyle(color: Colors.black54, fontSize: 18.0),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -196,7 +192,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(
                       backgroundColor:
-                      MaterialStateProperty.all(Colors.blue[900]),
+                          MaterialStateProperty.all(Colors.blue[900]),
                     ),
                     onPressed: () {
                       signUp();
@@ -204,19 +200,19 @@ class _RegisterUserState extends State<RegisterUser> {
                     icon: Icon(Icons.lock_open_rounded),
                     label: _isLoading
                         ? SizedBox(
-                      height: MediaQuery.of(context).size.width / 12,
-                      width: MediaQuery.of(context).size.width / 12,
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                        strokeWidth: 1,
-                      ),
-                    )
+                            height: MediaQuery.of(context).size.width / 12,
+                            width: MediaQuery.of(context).size.width / 12,
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.white,
+                              strokeWidth: 1,
+                            ),
+                          )
                         : Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        fontSize: 24.0,
-                      ),
-                    ),
+                            "Sign Up",
+                            style: TextStyle(
+                              fontSize: 24.0,
+                            ),
+                          ),
                   ),
                 ),
                 SizedBox(height: 17.0),
@@ -232,8 +228,8 @@ class _RegisterUserState extends State<RegisterUser> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyLogin()
-                        ));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => MyLogin()));
                       },
                       child: Text(
                         'Log In',

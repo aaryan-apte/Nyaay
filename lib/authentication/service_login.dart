@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/authentication/first_screen.dart';
 import 'package:nyaay/authentication/willpop_checker_user.dart';
+import 'package:nyaay/pages/lawyer/home/home2.dart';
 
-import '../pages/home.dart';
+// import '../pages/home.dart';
 
 class ServiceLogin extends StatefulWidget {
   const ServiceLogin({Key? key}) : super(key: key);
@@ -127,7 +128,7 @@ class _MyLogin1State extends State<ServiceLogin> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TestHome(),
+                          builder: (context) => const HomeL(),
                         ),
                       );
                     },

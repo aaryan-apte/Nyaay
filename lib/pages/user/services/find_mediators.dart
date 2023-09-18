@@ -1,3 +1,4 @@
+// import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +81,7 @@ class _MediatorListState extends State<MediatorList> {
                   return const Text('No mediators found in Thane, Maharashtra.');
                 } else {
                   // If data is available, display the list of mediators
-                  List<Map<String, dynamic>>? mediatorList = snapshot.data;
+                  List<Map<String, dynamic>>? mediatorList = snapshot.data as List<Map<String, dynamic>>?;
                   return ListView.builder(
                     itemCount: mediatorList?.length,
                     itemBuilder: (context, index) {

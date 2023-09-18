@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, use_build_context_synchronously
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../pages/home.dart';
+import 'package:nyaay/pages/user/home/home1.dart';
 import 'login.dart';
 
 class MyRegister extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MyRegisterState extends State<MyRegister> {
   final districtController = TextEditingController();
   final stateController = TextEditingController();
 
-  Future<void> addUser() async {
+  FutureOr<void> addUser() async {
     // CollectionReference users = FirebaseFirestore.instance.collection('service');
     // final FirebaseAuth auth = FirebaseAuth.instance;
     // final String? uid = auth.currentUser?.email;
@@ -58,19 +59,15 @@ class _MyRegisterState extends State<MyRegister> {
         .createUserWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim())
-        .then((userCreds) {
-      addUser().then((value) {
+        .then((value) {
         setState(() {
           _isLoading = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Account Created Successfully!")));
-        Future.delayed(const Duration(seconds: 2), () {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TestHome()));
-        });
-      });
+        ScaffoldMessenger.of(context).clearSnackBars();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeU()));
     }).onError((error, stackTrace) {
       setState(() {
         _isLoading = false;

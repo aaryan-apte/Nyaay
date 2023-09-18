@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaay/pages/user/services/request_lawyer.dart';
+// import 'package:nyaay/pages/user/services/request_lawyer.dart';
 import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
 import 'dart:math';
@@ -29,7 +31,8 @@ class _LawyerListState extends State<LawyerList> {
     category = widget.category;
   }
 
-  TextStyle textStyle = const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
+  TextStyle textStyle =
+      const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
   Future<List<Map<String, dynamic>>> getLawyers() async {
     List<Map<String, dynamic>> lawyerList = [];
@@ -52,10 +55,8 @@ class _LawyerListState extends State<LawyerList> {
       }
 
       for (var doc in querySnapshot.docs) {
-
         for (var cat in doc['categories']) {
-
-          if(cat == category) {
+          if (cat == category) {
             lawyerList.add({
               "name": doc['name'],
               "rating": doc['rating'],
@@ -64,7 +65,8 @@ class _LawyerListState extends State<LawyerList> {
               'hearingFees': doc['hearingFees'],
               'cases': doc['cases'],
               'leaderBoard': pow(doc['cases'], 0.4) * pow(doc['rating'], 0.6),
-              'categories' : doc['categories'],
+              'categories': doc['categories'],
+              'docID': doc.id,
             });
           }
         }
@@ -90,59 +92,65 @@ class _LawyerListState extends State<LawyerList> {
         child: AppDrawer(),
       ),
       appBar: AppBar(
-      // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
-      elevation: 0,// Remove the shadow
-      toolbarHeight: 100,
-      title: const Row(
-        children: [
-          Text(
-            'Find Lawyers    ',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          // SizedBox(height: 100.0),
-          Column(
-             mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
-            crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                            Icons.location_on,
-                            color: Colors.white,
-                            size: 15.0, // Adjust the icon size as needed
-                          ),
-                            Text(
-                              ' Maharashtra, Thane',
-                              style: TextStyle(color: Colors.white, fontSize: 10),
-                            ),
-
-                          ],
-                        ),
+        // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        elevation: 0, // Remove the shadow
+        toolbarHeight: 100,
+        title: Row(
+          children: [
+            const Text(
+              'Find Lawyers    ',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            // SizedBox(height: 100.0),
+            Column(
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Center the content vertically
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 3.0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        color: Colors.white,
+                        size: 15.0, // Adjust the icon size as needed
                       ),
-                      SizedBox(height: 3.0),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3.0),
-                        child: Row(
-                          children: [
-                             Icon(
-                            Icons.work_outline,
-                            color: Colors.white,
-                            size: 15.0, // Adjust the icon size as needed
-                          ),
-                            Text(
-                              ' Family',
-                              style: TextStyle(color: Colors.white, fontSize: 10),
-                            ),
-                          ],
+                      Text(
+                        '$district, $state',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
                         ),
                       ),
                     ],
                   ),
-        ],
-      ),
+                ),
+                const SizedBox(height: 3.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 3.0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.work_outline,
+                        color: Colors.white,
+                        size: 15.0, // Adjust the icon size as needed
+                      ),
+                      Text(
+                        category,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -161,8 +169,8 @@ class _LawyerListState extends State<LawyerList> {
                   return Text('Error: ${snapshot.error}',
                       style: const TextStyle(color: Colors.red));
                 } else if (!snapshot.hasData) {
-                  return const Text('No lawyers found in Thane, Maharashtra.',
-                      style: TextStyle(color: Colors.red));
+                  return Text('No lawyers found in $district, $state.',
+                      style: const TextStyle(color: Colors.red));
                 } else {
                   List<Map<String, dynamic>>? lawyerList = snapshot.data;
                   return ListView.builder(
@@ -173,27 +181,33 @@ class _LawyerListState extends State<LawyerList> {
                       final rating = lawyerList[index]["rating"];
                       final retainerFees = lawyerList[index]['retainerFees'];
                       final hearingFees = lawyerList[index]['hearingFees'];
-                      final leaderBoard = lawyerList[index]['leaderBoard'];
-                      final categories = lawyerList[index]['categories'];
+                      final docID = lawyerList[index]["docID"];
+                      // final leaderBoard = lawyerList[index]['leaderBoard'];
+                      // final categories = lawyerList[index]['categories'];
                       // print("Length: ${lawyerList.length}");
-        
-                      return GestureDetector
-                      (
-                        onTap: (){
+
+                      return GestureDetector(
+                        onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LawyerDetailPage(
-                                  lawyerName: name,
-                                  lawyerEmail: "aaryan3108@gmail.com",
-                                  // lawyerRating: rating,
-                                  // hearingFees: hearingFees,
-                                  // retainerFees: retainerFees,
-                                  // leaderBoard: leaderBoard,
-                                  // categories: categories,
-                                ),
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LawyerDetailPage(
+                                lawyerName: name,
+                                lawyerEmail: docID,
+                                state: state,
+                                district: district,
+                                rating: rating.toString(),
+                                  retainerFees: retainerFees.toString(),
+                                hearingFees: hearingFees.toString(),
+                                experience: experience.toString(),
+                                // lawyerRating: rating,
+                                // hearingFees: hearingFees,
+                                // retainerFees: retainerFees,
+                                // leaderBoard: leaderBoard,
+                                // categories: categories,
                               ),
-                            );
+                            ),
+                          );
                         },
                         child: Column(
                           children: [
@@ -201,73 +215,100 @@ class _LawyerListState extends State<LawyerList> {
                               width: double.infinity,
                               margin: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4), // Shadow color
-                                      spreadRadius: 3,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3), // Shadow position
-                                    ),
-                                  ],
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.4), // Shadow color
+                                    spreadRadius: 3,
+                                    blurRadius: 7,
+                                    offset:
+                                        const Offset(0, 3), // Shadow position
                                   ),
-                                  
+                                ],
+                              ),
                               padding: const EdgeInsets.all(13.0),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    height:125,
-                                    width:100,
+                                    height: 125,
+                                    width: 100,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                        image: AssetImage('assets/images/adv2.jpeg'), // Replace with your image path
-                                        fit: BoxFit.cover, // Adjust the fit as needed
+                                        image: AssetImage(
+                                            'assets/images/adv2.jpeg'), // Replace with your image path
+                                        fit: BoxFit
+                                            .cover, // Adjust the fit as needed
                                       ),
                                     ),
-                                    margin: const EdgeInsetsDirectional.only(end: 8),
-                                   ),
+                                    margin: const EdgeInsetsDirectional.only(
+                                        end: 8),
+                                  ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text("Name: $name", style: textStyle),
-                                      Text("Experience: $experience Years",
-                                          style: textStyle),
-                                      Text("Rating: $rating", style: textStyle),
-                                      Text("Hearing Fee: ₹$hearingFees",
-                                          style: textStyle),
-                                      Text("Retainer Fee: ₹$retainerFees",
-                                          style: textStyle),
+                                      Text(
+                                        name,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 19.0),
+                                      ),
+                                      Text(
+                                        "Experience: $experience Years",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 19.0),
+                                      ),
+                                      Text(
+                                        "⭐ $rating",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 19.0),
+                                      ),
+                                      Text(
+                                        "Hearing Fee: ₹$hearingFees",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 19.0),
+                                      ),
+                                      Text(
+                                        "Retainer Fee: ₹$retainerFees",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 19.0),
+                                      ),
                                       // const SizedBox(height: 10),
                                       // Text("Weight: $leaderBoard",
                                       //     style: textStyle),
-                                      Text("Categories: $category",
-                                          style: textStyle),
-                                  //     TextButton(
-                                  //     onPressed: () {
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => UserRequestLawyer(
-                                  //           lawyerName: name,
-                                  //           lawyerEmail: "aaryan3108@gmail.com",
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  //   child: Container(
-                                  //     padding: const EdgeInsets.all(10.0),
-                                  //     decoration: BoxDecoration(
-                                  //         color: const Color.fromARGB(255, 197, 197, 197),
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(10.0)),
-                                  //     child: Text(
-                                  //       "Request a talk",
-                                  //       style: textStyle,
-                                  //     ),
-                                  //   ),
-                                  //  )
+                                      // Text("Categories: $category",
+                                      //     style: textStyle),
+                                      //     TextButton(
+                                      //     onPressed: () {
+                                      //     Navigator.push(
+                                      //       context,
+                                      //       MaterialPageRoute(
+                                      //         builder: (context) => UserRequestLawyer(
+                                      //           lawyerName: name,
+                                      //           lawyerEmail: "aaryan3108@gmail.com",
+                                      //         ),
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      //   child: Container(
+                                      //     padding: const EdgeInsets.all(10.0),
+                                      //     decoration: BoxDecoration(
+                                      //         color: const Color.fromARGB(255, 197, 197, 197),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(10.0)),
+                                      //     child: Text(
+                                      //       "Request a talk",
+                                      //       style: textStyle,
+                                      //     ),
+                                      //   ),
+                                      //  )
                                     ],
                                   ),
                                   // TextButton(
