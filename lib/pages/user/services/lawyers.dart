@@ -93,8 +93,8 @@ class _UserLawyerState extends State<UserLawyer> {
         child: AppDrawer(),
       ),
       appBar: AppBar(
-      backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
-      // backgroundColor: Color.fromARGB(255, 39, 24, 2),
+      // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       elevation: 0, // Remove the shadow
       title: const Text(
         'Find Lawyers',
@@ -112,6 +112,7 @@ class _UserLawyerState extends State<UserLawyer> {
       //     fit: BoxFit.cover, // Adjust the fit as needed
       //   ),
       // ),
+      
         child: Center(
             child: Container(
             //   decoration: const BoxDecoration(
@@ -136,9 +137,10 @@ class _UserLawyerState extends State<UserLawyer> {
                 //       ],
                 //     ),
                 child: Column(
+                  
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [ 
-                    
+                      
                     Container(
                      decoration: BoxDecoration(
                       color: Colors.white, // Background color
@@ -252,7 +254,7 @@ class _UserLawyerState extends State<UserLawyer> {
                           ),
                           selectedDecoration: BoxDecoration(
                             gradient: LinearGradient(colors: [
-                              Color.fromARGB(131, 138, 71, 165),
+                              Color.fromARGB(131, 0, 0, 0),
                               Color.fromARGB(255, 255, 251, 251)
                             ]),  
                             
@@ -337,11 +339,11 @@ class _UserLawyerState extends State<UserLawyer> {
                         }
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: Color.fromARGB(31, 96, 3, 119),
+                        backgroundColor: Color.fromARGB(31, 0, 0, 0),
                       ),
                       child: const Text(
                         "Find me Lawyers",
-                        style: TextStyle(color: Color.fromARGB(255, 10, 0, 3), fontSize: 20.0),
+                        style: TextStyle(color: Color.fromARGB(255, 4, 4, 4), fontSize: 20.0),
                       ),
                     ),
                   ],

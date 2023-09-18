@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaay/localizations.dart';
+// import 'package:nyaay/localizations.dart';
 import 'drawer.dart';
 import 'slider.dart';
 
@@ -59,18 +59,18 @@ class _HomeUTestState extends State<HomeUTest> {
                   (context, index) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 14.0, left: 8.0, right: 8.0),
-                        child: Text(
-                            AppLocalizations.of(context)
-                                    ?.translate('NEW_ARRIVALS') ??
-                                '',
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700)),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(
+                      //       top: 14.0, left: 8.0, right: 8.0),
+                      //   child: Text(
+                      //       // AppLocalizations.of(context)
+                      //       //         ?.translate('NEW_ARRIVALS') ??
+                      //       //     '',
+                      //       style: TextStyle(
+                      //           color: Theme.of(context).colorScheme.secondary,
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w700)),
+                      // ),
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 8.0),
                         height: 240.0,
