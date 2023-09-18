@@ -53,6 +53,7 @@ class _UserRequestLawyerState extends State<UserRequestLawyer> {
         "time":
             "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
         "handled" : false,
+        "lawyerName": lawyerName,
       });
 
       await refU.add({
@@ -65,6 +66,8 @@ class _UserRequestLawyerState extends State<UserRequestLawyer> {
         "time":
             "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
         "status": false,
+        "lawyerName": lawyerName,
+        "lawyerEmail" : lawyerEmail,
       });
     } catch (e) {
       return SnackBar(content: Text(e.toString()));
