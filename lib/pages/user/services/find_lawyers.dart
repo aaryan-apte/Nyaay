@@ -67,6 +67,8 @@ class _LawyerListState extends State<LawyerList> {
               'leaderBoard': pow(doc['cases'], 0.4) * pow(doc['rating'], 0.6),
               'categories': doc['categories'],
               'docID': doc.id,
+              'description': doc['description'],
+              'courts':doc['courts'],
             });
           }
         }
@@ -182,6 +184,8 @@ class _LawyerListState extends State<LawyerList> {
                       final retainerFees = lawyerList[index]['retainerFees'];
                       final hearingFees = lawyerList[index]['hearingFees'];
                       final docID = lawyerList[index]["docID"];
+                      final description = lawyerList[index]["description"];
+                      final courts = lawyerList[index]["courts"];
                       // final leaderBoard = lawyerList[index]['leaderBoard'];
                       // final categories = lawyerList[index]['categories'];
                       // print("Length: ${lawyerList.length}");
@@ -192,6 +196,8 @@ class _LawyerListState extends State<LawyerList> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => LawyerDetailPage(
+                                description: description,
+                                courts: courts,
                                 lawyerName: name,
                                 lawyerEmail: docID,
                                 state: state,
@@ -238,7 +244,7 @@ class _LawyerListState extends State<LawyerList> {
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/adv2.jpeg'), // Replace with your image path
+                                            'assets/images/aaryan_photo2.jpg'), // Replace with your image path
                                         fit: BoxFit
                                             .cover, // Adjust the fit as needed
                                       ),

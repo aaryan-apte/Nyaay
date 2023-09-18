@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 // import 'package:nyaay/pages/user/services/request_lawyer.dart';
-import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
+// import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
-import 'dart:math';
+// import 'dart:math';
 
 class UserAppointments extends StatefulWidget {
   const UserAppointments(
@@ -110,8 +110,8 @@ class _UserAppointmentsState extends State<UserAppointments> {
                     ),
                   )
                 },
-                child: const Row(
-                  children: [
+                child: Row(
+                  children: const [
                     SizedBox(height: 8.0),
                     Text("View Past Requests",
                         style: TextStyle(
@@ -194,7 +194,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                         children: [
                                           const Icon(
                                              Icons.account_box_sharp,
-                                            color: const Color.fromARGB(255, 12, 12, 12),
+                                            color: Color.fromARGB(255, 12, 12, 12),
                                             size: 20.0,
                                           ),
                                           Text(
@@ -209,7 +209,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                         children: [
                                           const Icon(
                                              Icons.email,
-                                            color: const Color.fromARGB(255, 12, 12, 12),
+                                            color: Color.fromARGB(255, 12, 12, 12),
                                             size: 20.0,
                                           ),
                                           Text(
@@ -222,7 +222,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 8.0),
-                                        child: Container(
+                                        child: SizedBox(
                                           width: 320,
                                           child: Text(
                                             "$request",
