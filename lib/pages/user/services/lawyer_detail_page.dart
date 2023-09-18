@@ -2,14 +2,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaay/pages/user/home/drawer.dart';
+// import 'package:nyaay/pages/user/home/drawer.dart';
 import 'package:nyaay/pages/user/services/request_lawyer.dart';
 
 class LawyerDetailPage extends StatefulWidget {
-  LawyerDetailPage (
-      {super.key, 
-      required this.lawyerName, 
+  LawyerDetailPage(
+      {super.key,
+      required this.lawyerName,
       required this.lawyerEmail,
+      required this.district,
+      required this.state,
+      required this.rating,
+      required this.retainerFees,
+      required this.hearingFees,
+        required this.experience
       // required this.lawyerRating,
       // required this.hearingFees,
       // required this.retainerFees,
@@ -17,7 +23,14 @@ class LawyerDetailPage extends StatefulWidget {
       // required this.leaderBoard,
       });
 
-  String lawyerName, lawyerEmail;
+  String lawyerName,
+      lawyerEmail,
+      state,
+      district,
+      hearingFees,
+      retainerFees,
+      rating,
+  experience;
   // lawyerRating, categories;
   // double hearingFees, retainerFees, leaderBoard;
 
@@ -26,7 +39,13 @@ class LawyerDetailPage extends StatefulWidget {
 }
 
 class _LawyerDetailPageState extends State<LawyerDetailPage> {
-  late String lawyerName, lawyerEmail;
+  late String lawyerName,
+      lawyerEmail,
+      state,
+      district,
+      hearingFees,
+      retainerFees,
+      rating,experience;
   // lawyerRating, categories;
   // double hearingFees, retainerFees, leaderBoard;
 
@@ -40,11 +59,12 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
     super.initState();
     lawyerEmail = widget.lawyerEmail;
     lawyerName = widget.lawyerName;
-    // lawyerRating = widget.lawyerRating;
-    // hearingFees = widget.hearingFees;
-    // retainerFees = widget.retainerFees;
-    // categories = widget.categories;
-    // leaderBoard = widget.leaderBoard;
+    state = widget.state;
+    district = widget.district;
+    hearingFees = widget.hearingFees;
+    retainerFees = widget.retainerFees;
+    rating = widget.rating;
+    experience=widget.experience;
   }
 
   sendRequest() async {
@@ -60,8 +80,6 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
         .doc(userEmail)
         .collection('requests');
   }
-
-    
 
   @override
   Widget build(BuildContext context) {
@@ -79,44 +97,44 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(5.0)),
-      child: Text(
-        "\Rs 10000",
+      child: const Text(
+        "Rs 10000",
         style: TextStyle(color: Colors.white),
       ),
     );
 
-    
     final readButton = Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(140, 142, 142, 142), // Set your desired background color here
+          backgroundColor: const Color.fromARGB(
+              140, 142, 142, 142), // Set your desired background color here
         ),
         onPressed: () => {
           Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserRequestLawyer(
-                    lawyerName: lawyerName,
-                    lawyerEmail: "aaryan3108@gmail.com",
-                  ),
-                ),
-              )
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserRequestLawyer(
+                lawyerName: lawyerName,
+                lawyerEmail: "aaryan3108@gmail.com",
+              ),
+            ),
+          )
         },
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.call,
               color: Colors.white,
               size: 20.0,
             ),
             SizedBox(height: 8.0),
-            Text("Request A Call", style: TextStyle(
-              color: Color.fromARGB(255, 19, 19, 19),
-              fontWeight: FontWeight.bold,
-            )
-              ),
+            Text("Request A Call",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 19, 19, 19),
+                  fontWeight: FontWeight.bold,
+                )),
           ],
         ),
       ),
@@ -124,7 +142,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
 
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: [
         const SizedBox(height: 190.0),
         // const Icon(
         //   Icons.directions_car,
@@ -145,7 +163,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             // Expanded(flex: 1, child: levelIndicator),
-             Expanded(
+            Expanded(
               flex: 2,
               child: Column(
                 children: [
@@ -154,52 +172,55 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                     child: Row(
                       children: [
                         Icon(
-                        Icons.location_on,
-                        color: Colors.white,
-                        size: 20.0, // Adjust the icon size as needed
-                      ),
+                          Icons.location_on,
+                          color: Colors.white,
+                          size: 20.0, // Adjust the icon size as needed
+                        ),
                         Text(
-                          ' Maharashtra, Thane',
+                          '$district, $state',
                           style: TextStyle(color: Colors.white),
                         ),
-
                       ],
                     ),
                   ),
-                  SizedBox(height: 3.0),
+                  const SizedBox(height: 3.0),
                   Padding(
-                    padding: EdgeInsets.only(left: 3.0),
+                    padding: const EdgeInsets.only(left: 3.0),
                     child: Row(
                       children: [
-                         Icon(
-                        Icons.work_outline,
-                        color: Colors.white,
-                        size: 20.0, // Adjust the icon size as needed
-                      ),
+                        const Icon(
+                          Icons.work_outline,
+                          color: Colors.white,
+                          size: 20.0, // Adjust the icon size as needed
+                        ),
                         Text(
-                          ' 6 years Experience',
-                          style: TextStyle(color: Colors.white),
+                          ' $experience years Experience',
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
+                  ),
+                  Text(
+                    'Retainer Fee: ₹$retainerFees',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Hearing Fee: ₹$hearingFees',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ],
               ),
             ),
             // Expanded(flex: 1, child: lawyerPrice),
             Expanded(flex: 2, child: readButton),
-            
-              
           ],
         ),
-        
       ],
-      
     );
     final topContent = Stack(
-      children: <Widget>[
+      children: [
         Container(
-            padding: EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 20.0),
             height: MediaQuery.of(context).size.height * 0.5,
             decoration: const BoxDecoration(
               image: const DecorationImage(
@@ -207,22 +228,24 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0), // Adjust the radius as needed
-                        bottomRight: Radius.circular(20.0), // Adjust the radius as needed
-                      ),
+                bottomLeft:
+                    Radius.circular(20.0), // Adjust the radius as needed
+                bottomRight:
+                    Radius.circular(20.0), // Adjust the radius as needed
+              ),
             )),
         Container(
           height: MediaQuery.of(context).size.height * 0.5,
-          padding: EdgeInsets.all(40.0),
+          padding: const EdgeInsets.all(40.0),
           width: MediaQuery.of(context).size.width,
           // decoration: BoxDecoration(),
           decoration: const BoxDecoration(
             color: Color.fromRGBO(58, 66, 86, 0.481),
             borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0), // Adjust the radius as needed
-                        bottomRight: Radius.circular(20.0), // Adjust the radius as needed
-                      ),
+              bottomLeft: Radius.circular(20.0), // Adjust the radius as needed
+              bottomRight: Radius.circular(20.0), // Adjust the radius as needed
             ),
+          ),
           child: Center(
             child: topContentText,
           ),
@@ -240,70 +263,71 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
       ],
     );
 
-   final bottomContentText = Column(
-     mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
-    crossAxisAlignment: CrossAxisAlignment.start,
-     children: [
-      Text(
-        'Advocate Sudershani has since been practicing and handling cases independently with a result oriented approach, both professionally and ethically and has now acquired 8 years of professional experience in providing legal consultancy and advisory services. She has completed her BA.LLB(Hons) from Jamia Millia Islamia and has been practicing and handling cases independently and provides legal consultancy and advisory services.',
-        style: TextStyle(fontSize: 15.0, ),
-      ),
-      SizedBox(height: 20.0),
-      Text(
-        'Practice Areas',
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
-      ),
-      Text(
-        'Anticipatory Bail, Cheque Bounce, Child Custody, Court Marriage, Divorce, Domestic Violence, Family, High Court, Recovery, Succession Certificate, Wills / Trusts',
-        style: TextStyle(fontSize: 15.0),
-      ),
-      SizedBox(height: 20.0),
-      Text(
-        'Courts',
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
-      ),
-      Text(
-        'Bombay High Court, City Civil Court, Mumbai, Consumer District Forum, Mumbai, Court of Small Causes, Mumbai, Debts Recovery Tribunal (DRT) Mumbai, District and Sessions Court, Mumbai, District Court, Mumbai, Family Courts, Mumbai, State Consumer Disputes Redressal Commission, UP, Trial Courts, Mumbai',
-        style: TextStyle(fontSize: 15.0),
-      ),
-      SizedBox(height: 20.0),
-      Text(
-        'Testimonial/Reviews',
-        style: TextStyle(fontSize: 20.0 , fontWeight: FontWeight.w600),
-      ),
-     ],
-   );
-
-
-final bottomContent = Container(
-  
-  width: MediaQuery.of(context).size.width,
-  padding: EdgeInsets.all(40.0),
-  child: Center(
-    child: Column(
-      children: <Widget>[bottomContentText],
-    ),
-  ),
-);
-
-return SafeArea(
-  child: Scaffold(
-    body: Column(
-      children: <Widget>[
-        topContent,
-        Expanded(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(), // Adjust the physics as needed
-            child: Padding(
-              padding: EdgeInsets.only(top: 15.0), // Define your top limit
-              child: bottomContent,
-            ),
+    final bottomContentText = Column(
+      mainAxisAlignment:
+          MainAxisAlignment.center, // Center the content vertically
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Advocate Sudershani has since been practicing and handling cases independently with a result oriented approach, both professionally and ethically and has now acquired 8 years of professional experience in providing legal consultancy and advisory services. She has completed her BA.LLB(Hons) from Jamia Millia Islamia and has been practicing and handling cases independently and provides legal consultancy and advisory services.',
+          style: TextStyle(
+            fontSize: 15.0,
           ),
         ),
+        SizedBox(height: 20.0),
+        Text(
+          'Practice Areas',
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+        ),
+        Text(
+          'Anticipatory Bail, Cheque Bounce, Child Custody, Court Marriage, Divorce, Domestic Violence, Family, High Court, Recovery, Succession Certificate, Wills / Trusts',
+          style: TextStyle(fontSize: 15.0),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          'Courts',
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+        ),
+        Text(
+          'Bombay High Court, City Civil Court, Mumbai, Consumer District Forum, Mumbai, Court of Small Causes, Mumbai, Debts Recovery Tribunal (DRT) Mumbai, District and Sessions Court, Mumbai, District Court, Mumbai, Family Courts, Mumbai, State Consumer Disputes Redressal Commission, UP, Trial Courts, Mumbai',
+          style: TextStyle(fontSize: 15.0),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          'Testimonial/Reviews',
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+        ),
       ],
-    ),
-  ),
-);
-}
-}
+    );
 
+    final bottomContent = Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(40.0),
+      child: Center(
+        child: Column(
+          children: <Widget>[bottomContentText],
+        ),
+      ),
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            topContent,
+            Expanded(
+              child: SingleChildScrollView(
+                physics:
+                    const BouncingScrollPhysics(), // Adjust the physics as needed
+                child: Padding(
+                  padding: EdgeInsets.only(top: 15.0), // Define your top limit
+                  child: bottomContent,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
