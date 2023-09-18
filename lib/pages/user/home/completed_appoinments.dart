@@ -11,9 +11,7 @@ import 'package:nyaay/pages/user/home/drawer.dart';
 import 'dart:math';
 
 class UserCAppointments extends StatefulWidget {
-  const UserCAppointments(
-      {super.key,
-      required this.userEmail});
+  const UserCAppointments({super.key, required this.userEmail});
 
   final String userEmail;
 
@@ -27,52 +25,46 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
   initState() {
     super.initState();
     userEmail = widget.userEmail;
-    
   }
 
   TextStyle textStyle =
       const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
   Future<List<Map<String, dynamic>>> getRequests(String userEmail) async {
-  List<Map<String, dynamic>> requestList = [];
+    List<Map<String, dynamic>> requestList = [];
 
+    try {
+      //  to fetch data from the 'requests' collection
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userEmail) // User's email is the document ID
+          .collection('requests')
+          .get();
 
-  try {
-    //  to fetch data from the 'requests' collection
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userEmail) // User's email is the document ID
-        .collection('requests')
-        .get();
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> requestData = {
+          'email': doc['email'],
+          'date': doc['date'],
+          'time': doc['time'],
+          'name': doc['name'],
+          'phone': doc['phone'],
+          'request': doc['request'],
+          'status': doc['status'],
+          'lawyerName': doc['lawyerName'],
+          'lawyerEmail': doc['lawyerEmail'],
+          // Add more fields as needed
+        };
 
-    for (var doc in querySnapshot.docs) {
-      Map<String, dynamic> requestData = {
-        'email': doc['email'],
-        'date': doc['date'],
-        'time':doc['time'],
-        'name': doc['name'],
-        'phone': doc['phone'],
-        'request': doc['request'],
-        'status': doc['status'],
-        'lawyerName' : doc['lawyerName'],
-        'lawyerEmail' : doc['lawyerEmail'],
-        // Add more fields as needed
-      };
-
-
-      // Add requestData to the requestList if status is false
-      if (requestData['status'] == true) {
-        requestList.add(requestData);
+        // Add requestData to the requestList if status is false
+        if (requestData['status'] == true) {
+          requestList.add(requestData);
+        }
       }
+    } catch (e) {
+      throw ('Error fetching requests: $e');
     }
-  } catch (e) {
-    throw ('Error fetching requests: $e');
+    return requestList;
   }
-  return requestList;
-}
-
-
-      
 
   @override
   Widget build(BuildContext context) {
@@ -97,32 +89,32 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
               // width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(
-                      140, 142, 142, 142), // Set your desired background color here
+                  backgroundColor: const Color.fromARGB(140, 142, 142,
+                      142), // Set your desired background color here
                 ),
                 onPressed: () => {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                            builder: (context) => UserAppointments(
-                              userEmail: userEmail
-                          ),
+                      builder: (context) =>
+                          UserAppointments(userEmail: userEmail),
                     ),
                   )
                 },
-                child: const Row(
-                  children: [
+                child: Row(
+                  children: const [
                     SizedBox(height: 8.0),
-                    Text("View Pending Requests",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 19, 19, 19),
-                          fontWeight: FontWeight.bold,
-                        )),
+                    Text(
+                      "View Pending Requests",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 19, 19, 19),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            
           ],
         ),
       ),
@@ -159,9 +151,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                       final time = requestList[index]['time'];
 
                       return GestureDetector(
-                        onTap: () {
-                          
-                        },
+                        onTap: () {},
                         child: Column(
                           children: [
                             Container(
@@ -185,7 +175,6 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -193,8 +182,9 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                       Row(
                                         children: [
                                           const Icon(
-                                             Icons.account_box_sharp,
-                                            color: const Color.fromARGB(255, 12, 12, 12),
+                                            Icons.account_box_sharp,
+                                            color: const Color.fromARGB(
+                                                255, 12, 12, 12),
                                             size: 20.0,
                                           ),
                                           Text(
@@ -208,8 +198,9 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                       Row(
                                         children: [
                                           const Icon(
-                                             Icons.email,
-                                            color: const Color.fromARGB(255, 12, 12, 12),
+                                            Icons.email,
+                                            color: const Color.fromARGB(
+                                                255, 12, 12, 12),
                                             size: 20.0,
                                           ),
                                           Text(
@@ -221,7 +212,8 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                         ],
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 8.0),
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
                                         child: Container(
                                           width: 320,
                                           child: Text(
@@ -238,16 +230,14 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15.0),
                                       ),
-                                      
                                       const SizedBox(height: 10),
-                                          TextButton(
-                                          onPressed: () {
-                                          
-                                        },
+                                      TextButton(
+                                        onPressed: () {},
                                         child: Container(
                                           padding: const EdgeInsets.all(10.0),
                                           decoration: BoxDecoration(
-                                              color: const Color.fromARGB(255, 197, 197, 197),
+                                              color: const Color.fromARGB(
+                                                  255, 197, 197, 197),
                                               borderRadius:
                                                   BorderRadius.circular(10.0)),
                                           child: Text(
@@ -255,7 +245,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                             style: textStyle,
                                           ),
                                         ),
-                                       )
+                                      )
                                     ],
                                   ),
                                   // TextButton(

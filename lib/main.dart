@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nyaay/authentication/service_signup.dart';
+import 'package:nyaay/pages/lawyer/home/home2.dart';
+import 'package:nyaay/pages/user/home/home1.dart';
+// import 'package:nyaay/authentication/service_signup.dart';
 // import 'package:nyaay/authentication/service_signup.dart';
 // import 'package:nyaay/authentication/first1.dart';
 // import 'package:nyaay/authentication/first_screen.dart';
 // import 'package:nyaay/authentication/login.dart';
 // import 'package:nyaay/authentication/signup.dart';
 // import 'package:nyaay/authentication/willpop_checker_user.dart;
-import 'package:nyaay/pages/user/home/home1.dart';
+// import 'package:nyaay/pages/user/home/home1.dart';
 import 'firebase_options.dart';
 
 Future<void>main() async {
@@ -19,7 +22,6 @@ Future<void>main() async {
   runApp(
     MaterialApp(
       home: const HomeU(),
-
       theme: ThemeData(
         primaryColor: Colors.deepOrange.shade500,
         colorScheme: ColorScheme.fromSwatch()

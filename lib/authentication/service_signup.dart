@@ -566,7 +566,7 @@ class _ServiceSignupState extends State<ServiceSignup> {
                 TextFormField(
                   // keyboardType: TextInputType.number,
                   maxLines: 4,
-                  maxLength: 100,
+                  maxLength: 300,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20.0,
@@ -596,22 +596,22 @@ class _ServiceSignupState extends State<ServiceSignup> {
                   ),
                 ),
 
-                TextFormField(
-                  // keyboardType: TextInputType.number,
-                  maxLines: 2,
-                  maxLength: 100,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                  ),
-                  controller: practiceAreasController,
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                    labelText: "Which areas do you practice (for the client)",
-                    labelStyle:
-                    TextStyle(color: Colors.black54, fontSize: 18.0),
-                  ),
-                ),
+                // TextFormField(
+                //   // keyboardType: TextInputType.number,
+                //   maxLines: 2,
+                //   maxLength: 100,
+                //   style: TextStyle(
+                //     color: Colors.black,
+                //     fontSize: 20.0,
+                //   ),
+                //   controller: practiceAreasController,
+                //   cursorColor: Colors.white,
+                //   decoration: InputDecoration(
+                //     labelText: "Which areas do you practice (for the client)",
+                //     labelStyle:
+                //     TextStyle(color: Colors.black54, fontSize: 18.0),
+                //   ),
+                // ),
                 SizedBox(height: 30),
                 SizedBox(
                   height: 50.0,

@@ -6,22 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/services/request_lawyer.dart';
 
 class LawyerDetailPage extends StatefulWidget {
-  LawyerDetailPage(
-      {super.key,
-      required this.lawyerName,
-      required this.lawyerEmail,
-      required this.district,
-      required this.state,
-      required this.rating,
-      required this.retainerFees,
-      required this.hearingFees,
-        required this.experience
-      // required this.lawyerRating,
-      // required this.hearingFees,
-      // required this.retainerFees,
-      // required this.categories,
-      // required this.leaderBoard,
-      });
+  LawyerDetailPage({
+    super.key,
+    required this.lawyerName,
+    required this.lawyerEmail,
+    required this.district,
+    required this.state,
+    required this.rating,
+    required this.retainerFees,
+    required this.hearingFees,
+    required this.experience,
+    required this.description,
+    required this.courts,
+    // required this.lawyerRating,
+    // required this.hearingFees,
+    // required this.retainerFees,
+    // required this.categories,
+    // required this.leaderBoard,
+  });
 
   String lawyerName,
       lawyerEmail,
@@ -30,7 +32,9 @@ class LawyerDetailPage extends StatefulWidget {
       hearingFees,
       retainerFees,
       rating,
-  experience;
+      description,
+      courts,
+      experience;
   // lawyerRating, categories;
   // double hearingFees, retainerFees, leaderBoard;
 
@@ -45,7 +49,10 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
       district,
       hearingFees,
       retainerFees,
-      rating,experience;
+      courts,
+      description,
+      rating,
+      experience;
   // lawyerRating, categories;
   // double hearingFees, retainerFees, leaderBoard;
 
@@ -64,45 +71,41 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
     hearingFees = widget.hearingFees;
     retainerFees = widget.retainerFees;
     rating = widget.rating;
-    experience=widget.experience;
+    experience = widget.experience;
+    courts = widget.courts;
+    description = widget.description;
   }
 
-  sendRequest() async {
-    String? userEmail = FirebaseAuth.instance.currentUser?.email;
-    // print(userEmail);
-    final refL = FirebaseFirestore.instance
-        .collection('lawyer')
-        .doc('aaryan3108@gmail.com') // lawyerEmail
-        .collection('requests');
+  getTestimonials() async{
+    final email = FirebaseAuth.instance.currentUser?.email;
+    final ref = await FirebaseFirestore.instance.collection('lawyer').doc(email).collection('testimonials').get();
 
-    final refU = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userEmail)
-        .collection('requests');
+    List<Map<String, dynamic>> map = [];
+    for(var doc in ref.docs){
+      map.add({
+        "name": doc['name'],
+        "testimonial": doc['testimonial'],
+      });
+    }
+    return map;
   }
+
+  // sendRequest() async {
+  //   String? userEmail = FirebaseAuth.instance.currentUser?.email;
+  //   // print(userEmail);
+  //   final refL = FirebaseFirestore.instance
+  //       .collection('lawyer')
+  //       .doc('aaryan3108@gmail.com') // lawyerEmail
+  //       .collection('requests');
+  //
+  //   final refU = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userEmail)
+  //       .collection('requests');
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // final levelIndicator = Container(
-    //   child: Container(
-    //     child: LinearProgressIndicator(
-    //         backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-    //         value: double.parse(lawyerRating),
-    //         valueColor: AlwaysStoppedAnimation(Colors.green)),
-    //   ),
-    // );
-
-    final lawyerPrice = Container(
-      padding: const EdgeInsets.all(7.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: const Text(
-        "Rs 10000",
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-
     final readButton = Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       width: MediaQuery.of(context).size.width,
@@ -149,14 +152,14 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
         //   color: Colors.white,
         //   size: 40.0,
         // ),
-        Container(
+        const SizedBox(
           width: 90.0,
-          child: const Divider(color: Colors.green),
+          child: Divider(color: Colors.green),
         ),
-        SizedBox(height: 5.0),
+        const SizedBox(height: 5.0),
         Text(
           lawyerName,
-          style: TextStyle(color: Colors.white, fontSize: 30.0),
+          style: const TextStyle(color: Colors.white, fontSize: 30.0),
         ),
         // SizedBox(height: 30.0),
         Row(
@@ -171,14 +174,14 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                     padding: const EdgeInsets.only(left: 3.0),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.location_on,
                           color: Colors.white,
                           size: 20.0, // Adjust the icon size as needed
                         ),
                         Text(
                           '$district, $state',
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
@@ -200,13 +203,11 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                       ],
                     ),
                   ),
-                  
                 ],
               ),
             ),
             // Expanded(flex: 1, child: lawyerPrice),
             Expanded(flex: 2, child: readButton),
-            
           ],
         ),
         Row(
@@ -215,15 +216,15 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
               padding: const EdgeInsets.only(left: 3.0),
               child: Row(
                 children: [
-                  Icon(
-                     Icons.payment,
+                  const Icon(
+                    Icons.payment,
                     color: Colors.white,
                     size: 20.0, // Adjust the icon size as needed
                   ),
-                  Text( 
-              'Retainer Fee: ₹$retainerFees   ',
-              style: TextStyle(color: Colors.white),
-            ),
+                  Text(
+                    'Retainer Fee: ₹$retainerFees   ',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),
@@ -232,16 +233,13 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
               padding: const EdgeInsets.only(left: 3.0),
               child: Row(
                 children: [
-                  
-                  
                   Text(
                     'Hearing Fee: ₹$hearingFees',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ],
               ),
             ),
-            
           ],
         )
       ],
@@ -252,8 +250,8 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
             padding: const EdgeInsets.only(left: 20.0),
             height: MediaQuery.of(context).size.height * 0.5,
             decoration: const BoxDecoration(
-              image: const DecorationImage(
-                image: const AssetImage('assets/images/adv2.jpeg'),
+              image: DecorationImage(
+                image: AssetImage('assets/images/aaryan_photo2.jpg'),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.only(
@@ -286,55 +284,91 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back, color: Colors.white),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
           ),
         )
       ],
     );
 
     final bottomContentText = Column(
-      mainAxisAlignment:
-          MainAxisAlignment.center, // Center the content vertically
-      crossAxisAlignment: CrossAxisAlignment.start,
+      // mainAxisAlignment:
+          // MainAxisAlignment.start, // Center the content vertically
+      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Advocate Sudershani has since been practicing and handling cases independently with a result oriented approach, both professionally and ethically and has now acquired 8 years of professional experience in providing legal consultancy and advisory services. She has completed her BA.LLB(Hons) from Jamia Millia Islamia and has been practicing and handling cases independently and provides legal consultancy and advisory services.',
-          style: TextStyle(
-            fontSize: 15.0,
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Text(
-          'Practice Areas',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+          'About $lawyerName',
+          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
         ),
         Text(
-          'Anticipatory Bail, Cheque Bounce, Child Custody, Court Marriage, Divorce, Domestic Violence, Family, High Court, Recovery, Succession Certificate, Wills / Trusts',
-          style: TextStyle(fontSize: 15.0),
+          description,
+          // 'Advocate Sudershani has since been practicing and handling cases independently with a result oriented approach, both professionally and ethically and has now acquired 8 years of professional experience in providing legal consultancy and advisory services. She has completed her BA.LLB(Hons) from Jamia Millia Islamia and has been practicing and handling cases independently and provides legal consultancy and advisory services.',
+          style: const TextStyle(fontSize: 15.0),
         ),
-        SizedBox(height: 20.0),
-        Text(
+        // const SizedBox(height: 20.0),
+        // const Text(
+        //   'Practice Areas',
+        //   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+        // ),
+        const SizedBox(height: 20.0),
+        const Text(
           'Courts',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
         ),
         Text(
-          'Bombay High Court, City Civil Court, Mumbai, Consumer District Forum, Mumbai, Court of Small Causes, Mumbai, Debts Recovery Tribunal (DRT) Mumbai, District and Sessions Court, Mumbai, District Court, Mumbai, Family Courts, Mumbai, State Consumer Disputes Redressal Commission, UP, Trial Courts, Mumbai',
-          style: TextStyle(fontSize: 15.0),
+          courts,
+          style: const TextStyle(fontSize: 15.0),
         ),
-        SizedBox(height: 20.0),
-        Text(
+        const SizedBox(height: 20.0),
+        const Text(
           'Testimonial/Reviews',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height/2,
+          child: FutureBuilder(
+            future: getTestimonials(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.brown,
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}',
+                    style: const TextStyle(color: Colors.red));
+              } else if (!snapshot.hasData) {
+                return Text('No lawyers found in $district, $state.',
+                    style: const TextStyle(color: Colors.red));
+              } else {
+                List<Map<String, dynamic>>? testimonialList = snapshot.data as List<Map<String, dynamic>>?;
+                return ListView.builder(
+                  itemCount: testimonialList?.length,
+                  itemBuilder: (context, index) {
+                    final name = testimonialList![index]["name"];
+                    final testimonial = testimonialList[index]["testimonial"];
+
+                    return Column(
+                      children: [
+                        Text("Name: $name"),
+                        Text(testimonial),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+          ),
         ),
       ],
     );
 
     final bottomContent = Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(40.0),
+      padding: const EdgeInsets.all(40.0),
       child: Center(
         child: Column(
-          children: <Widget>[bottomContentText],
+          children: [bottomContentText],
         ),
       ),
     );
@@ -342,14 +376,15 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          children: <Widget>[
+          children:[
             topContent,
             Expanded(
               child: SingleChildScrollView(
                 physics:
                     const BouncingScrollPhysics(), // Adjust the physics as needed
                 child: Padding(
-                  padding: EdgeInsets.only(top: 15.0), // Define your top limit
+                  padding:
+                      const EdgeInsets.only(top: 15.0), // Define your top limit
                   child: bottomContent,
                 ),
               ),
