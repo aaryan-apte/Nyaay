@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaay/pages/user/services/request_lawyer.dart';
+// import 'package:nyaay/pages/user/services/request_lawyer.dart';
 import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
 import 'dart:math';
@@ -91,10 +93,10 @@ class _LawyerListState extends State<LawyerList> {
       ),
       appBar: AppBar(
       // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       elevation: 0,// Remove the shadow
       toolbarHeight: 100,
-      title: const Row(
+      title: Row(
         children: [
           Text(
             'Find Lawyers    ',
@@ -106,15 +108,15 @@ class _LawyerListState extends State<LawyerList> {
             crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 3.0),
+                        padding: const EdgeInsets.only(left: 3.0),
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                             Icons.location_on,
                             color: Colors.white,
                             size: 15.0, // Adjust the icon size as needed
                           ),
-                            Text(
+                            const Text(
                               ' Maharashtra, Thane',
                               style: TextStyle(color: Colors.white, fontSize: 10),
                             ),
@@ -164,7 +166,7 @@ class _LawyerListState extends State<LawyerList> {
                   return const Text('No lawyers found in Thane, Maharashtra.',
                       style: TextStyle(color: Colors.red));
                 } else {
-                  List<Map<String, dynamic>>? lawyerList = snapshot.data;
+                  List<Map<String, dynamic>>? lawyerList = snapshot.data as List<Map<String, dynamic>>?;
                   return ListView.builder(
                     itemCount: lawyerList?.length,
                     itemBuilder: (context, index) {
@@ -201,7 +203,7 @@ class _LawyerListState extends State<LawyerList> {
                               width: double.infinity,
                               margin: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  color: const Color.fromARGB(255, 255, 255, 255),
                                   borderRadius: BorderRadius.circular(10.0),
                                   boxShadow: [
                                     BoxShadow(
