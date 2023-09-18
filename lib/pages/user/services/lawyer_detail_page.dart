@@ -143,7 +143,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 190.0),
+        const SizedBox(height: 170.0),
         // const Icon(
         //   Icons.directions_car,
         //   color: Colors.white,
@@ -200,10 +200,40 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                       ],
                     ),
                   ),
-                  Text(
-                    'Retainer Fee: ₹$retainerFees',
-                    style: TextStyle(color: Colors.white),
+                  
+                ],
+              ),
+            ),
+            // Expanded(flex: 1, child: lawyerPrice),
+            Expanded(flex: 2, child: readButton),
+            
+          ],
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 3.0),
+              child: Row(
+                children: [
+                  Icon(
+                     Icons.payment,
+                    color: Colors.white,
+                    size: 20.0, // Adjust the icon size as needed
                   ),
+                  Text( 
+              'Retainer Fee: ₹$retainerFees   ',
+              style: TextStyle(color: Colors.white),
+            ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 3.0),
+              child: Row(
+                children: [
+                  
+                  
                   Text(
                     'Hearing Fee: ₹$hearingFees',
                     style: TextStyle(color: Colors.white),
@@ -211,10 +241,9 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                 ],
               ),
             ),
-            // Expanded(flex: 1, child: lawyerPrice),
-            Expanded(flex: 2, child: readButton),
+            
           ],
-        ),
+        )
       ],
     );
     final topContent = Stack(

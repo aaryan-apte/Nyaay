@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/pages/user/home/view_appoinments.dart';
 // import 'package:flutter_ecommerce_ui_kit/blocks/auth_block.dart';
 import 'package:provider/provider.dart';
 
@@ -8,9 +10,26 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+
+  
   @override
   Widget build(BuildContext context) {
     // AuthBlock auth = Provider.of<AuthBlock>(context);
+
+    String userEmail = "";
+
+        try {
+          User? user = FirebaseAuth.instance.currentUser;
+          if (user != null) {
+            userEmail = user.email ?? 'No email available';
+          } else {
+            userEmail = 'No user is currently logged in';
+          }
+        } catch (e) {
+          // Handle any Firebase-related exceptions here
+          userEmail = 'Error: $e';
+        }
+
     return Column(
       children: <Widget>[
         // if (auth.isLoggedIn)
@@ -51,24 +70,30 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               ListTile(
                 leading:
-                    Icon(Icons.account_balance_wallet_rounded, color: Theme.of(context).colorScheme.secondary),
+                    const Icon(Icons.account_balance_wallet_rounded, color: Colors.black),
                 title: Text('Appointments'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, '/categorise');
+                onTap: () => {
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserAppointments(
+                              userEmail: userEmail
+                            ),
+                          ),
+                  ),
                 },
               ),
               ListTile(
                 leading:
                     Icon(Icons.align_vertical_bottom, color: Theme.of(context).colorScheme.secondary),
-                title: Text('Leaderboard'),
+                title: const Text('Leaderboard'),
                 trailing: Container(
                   padding: const EdgeInsets.all(10.0),
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Theme.of(context).primaryColor,
                   ),
-                  child: Text('4',
+                  child: const Text('4',
                       style: TextStyle(color: Colors.white, fontSize: 10.0)),
                 ),
                 onTap: () {
