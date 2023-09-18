@@ -26,6 +26,7 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   provider: ^6.0.3
   flutter_multi_select_items: ^0.4.2
+  flutter_rating_bar: ^4.0.1
 #  flutter_svg: ^2.0.7
 
 dev_dependencies:

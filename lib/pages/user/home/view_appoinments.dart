@@ -8,6 +8,7 @@ import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 // import 'package:nyaay/pages/user/services/request_lawyer.dart';
 // import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
+import 'package:nyaay/pages/user/services/rate_review.dart';
 // import 'dart:math';
 
 class UserAppointments extends StatefulWidget {
@@ -268,15 +269,16 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                               ),
                                               TextButton(
                                               onPressed: () {
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) => UserRequestLawyer(
-                                              //       lawyerName: name,
-                                              //       lawyerEmail: "aaryan3108@gmail.com",
-                                              //     ),
-                                              //   ),
-                                              // );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => RateReview(
+                                                    lawyerName: lawyerName,
+                                                    lawyerEmail: lawyerEmail,
+                                                    uname: name,
+                                                  ),
+                                                ),
+                                              );
                                         },
                                         child: Container(
                                               padding: const EdgeInsets.all(10.0),

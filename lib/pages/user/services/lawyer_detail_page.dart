@@ -5,6 +5,49 @@ import 'package:flutter/material.dart';
 // import 'package:nyaay/pages/user/home/drawer.dart';
 import 'package:nyaay/pages/user/services/request_lawyer.dart';
 
+
+import 'package:flutter/material.dart';
+
+class StarRating extends StatelessWidget {
+  final double rating;
+  final double size;
+  final Color color;
+
+  StarRating({
+    required this.rating,
+    this.size = 10.0,
+    this.color = Colors.amber,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(5, (index) {
+        if (index + 1 <= rating) {
+          return Icon(
+            Icons.star,
+            size: size,
+            color: color,
+          );
+        } else if (index < rating) {
+          return Icon(
+            Icons.star_half,
+            size: size,
+            color: color,
+          );
+        } else {
+          return Icon(
+            Icons.star_border,
+            size: size,
+            color: color,
+          );
+        }
+      }),
+    );
+  }
+}
+
+
 class LawyerDetailPage extends StatefulWidget {
   LawyerDetailPage({
     super.key,
@@ -78,13 +121,19 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
 
   getTestimonials() async{
     final email = FirebaseAuth.instance.currentUser?.email;
-    final ref = await FirebaseFirestore.instance.collection('lawyer').doc(email).collection('testimonials').get();
+    final ref = await FirebaseFirestore.instance
+      .collection('lawyer')
+      .doc('aaryan3108@gmail.com')
+      .collection('testimonials')
+      .get();
 
     List<Map<String, dynamic>> map = [];
     for(var doc in ref.docs){
       map.add({
         "name": doc['name'],
-        "testimonial": doc['testimonial'],
+        "review": doc['review'],
+        "date": doc['date'],
+        "rating": doc['rating'],
       });
     }
     return map;
@@ -301,7 +350,6 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
         ),
         Text(
           description,
-          // 'Advocate Sudershani has since been practicing and handling cases independently with a result oriented approach, both professionally and ethically and has now acquired 8 years of professional experience in providing legal consultancy and advisory services. She has completed her BA.LLB(Hons) from Jamia Millia Islamia and has been practicing and handling cases independently and provides legal consultancy and advisory services.',
           style: const TextStyle(fontSize: 15.0),
         ),
         // const SizedBox(height: 20.0),
@@ -338,7 +386,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                 return Text('Error: ${snapshot.error}',
                     style: const TextStyle(color: Colors.red));
               } else if (!snapshot.hasData) {
-                return Text('No lawyers found in $district, $state.',
+                return Text('No testimonial found for $lawyerName',
                     style: const TextStyle(color: Colors.red));
               } else {
                 List<Map<String, dynamic>>? testimonialList = snapshot.data as List<Map<String, dynamic>>?;
@@ -346,14 +394,88 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                   itemCount: testimonialList?.length,
                   itemBuilder: (context, index) {
                     final name = testimonialList![index]["name"];
-                    final testimonial = testimonialList[index]["testimonial"];
+                    final review = testimonialList[index]["review"];
+                    final date = testimonialList[index]["date"];
+                    final rating = testimonialList[index]["rating"];
 
                     return Column(
-                      children: [
-                        Text("Name: $name"),
-                        Text(testimonial),
-                      ],
-                    );
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              margin: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.4), // Shadow color
+                                    spreadRadius: 3,
+                                    blurRadius: 7,
+                                    offset:
+                                        const Offset(0, 3), // Shadow position
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(15.0),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                             Icons.account_box_sharp,
+                                            color: Color.fromARGB(255, 12, 12, 12),
+                                            size: 20.0,
+                                          ),
+                                          Text(
+                                            name,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 15.0),
+                                          ),
+                                        ],
+                                      ),
+                                       StarRating(
+                                            rating: rating.toDouble(), // Assuming rating is a double value
+                                            size: 20.0, // Adjust the size as needed
+                                            color: Colors.amber, // Choose the color you want for stars
+                                        ),
+                                      Text(
+                                        "Review uploaded on: $date",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15.0),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8.0),
+                                        child: SizedBox(
+                                          width: 280,
+                                          child: Text(
+                                            "$review",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                fontSize: 13.0),
+                                          ),
+                                        ),
+                                      ),
+                                      
+                                      
+                                      const SizedBox(height: 10),
+                                          
+                                    ],
+                                  ),
+                                  
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
                   },
                 );
               }
