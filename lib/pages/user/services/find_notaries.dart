@@ -1,3 +1,4 @@
+// import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +81,7 @@ class _NotaryListState extends State<NotaryList> {
                   return const Text('No notaries found in Thane, Maharashtra.');
                 } else {
                   // If data is available, display the list of mediators
-                  List<Map<String, dynamic>>? notaryList = snapshot.data;
+                  List<Map<String, dynamic>>? notaryList = snapshot.data as List<Map<String, dynamic>>?;
                   return ListView.builder(
                     itemCount: notaryList?.length,
                     itemBuilder: (context, index) {

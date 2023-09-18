@@ -61,13 +61,12 @@ class _HomeSliderState extends State<HomeSlider> {
                           ),
                         ],
                       ),
-                        child: const Center(
+                        child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              
-                              children: <Widget>[
+                              children:[
                             SizedBox(height: 230.0),
                             Text(
                                 'NYAAY',

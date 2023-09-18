@@ -87,11 +87,11 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
 
     
     final readButton = Container(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            primary: Color.fromARGB(140, 142, 142, 142), // Set your desired background color here
+            backgroundColor: const Color.fromARGB(140, 142, 142, 142), // Set your desired background color here
         ),
         onPressed: () => {
           Navigator.push(
@@ -104,7 +104,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                 ),
               )
         },
-        child: const Row(
+        child: Row(
           children: [
             Icon(
               Icons.call,
@@ -145,12 +145,12 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             // Expanded(flex: 1, child: levelIndicator),
-             const Expanded(
+             Expanded(
               flex: 2,
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 3.0),
+                    padding: const EdgeInsets.only(left: 3.0),
                     child: Row(
                       children: [
                         Icon(

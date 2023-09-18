@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+// import 'dart:async';
 
 class ArbitratorList extends StatefulWidget {
   const ArbitratorList({super.key, required this.state, required this.district});
@@ -80,7 +81,7 @@ class _ArbitratorListState extends State<ArbitratorList> {
                   return const Text('No arbitrators found in Thane, Maharashtra.');
                 } else {
                   // If data is available, display the list of arbitrators
-                  List<Map<String, dynamic>>? arbitratorList = snapshot.data;
+                  List<Map<String, dynamic>>? arbitratorList = snapshot.data as List<Map<String, dynamic>>?;
                   return ListView.builder(
                     itemCount: arbitratorList?.length,
                     itemBuilder: (context, index) {
