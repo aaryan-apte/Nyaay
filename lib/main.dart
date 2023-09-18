@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nyaay/authentication/service_signup.dart';
+// import 'package:nyaay/authentication/service_signup.dart';
 // import 'package:nyaay/authentication/first1.dart';
 // import 'package:nyaay/authentication/first_screen.dart';
 // import 'package:nyaay/authentication/login.dart';

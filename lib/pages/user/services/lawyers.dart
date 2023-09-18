@@ -90,9 +90,9 @@ class _UserLawyerState extends State<UserLawyer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: AppDrawer(),
-      ),
+      // drawer: Drawer(
+      //   child: AppDrawer(),
+      // ),
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
