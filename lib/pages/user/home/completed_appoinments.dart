@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/view_appoinments.dart';
 // import 'package:nyaay/pages/user/services/request_lawyer.dart';
-import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
+// import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
-import 'dart:math';
+// import 'dart:math';
 
 class UserCAppointments extends StatefulWidget {
   const UserCAppointments({super.key, required this.userEmail});

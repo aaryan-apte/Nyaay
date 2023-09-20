@@ -1,19 +1,17 @@
 //ignore_for_file: ignore_const_preferences
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:nyaay/pages/user/home/drawer.dart';
 import 'package:nyaay/pages/user/services/request_lawyer.dart';
-
-
-import 'package:flutter/material.dart';
 
 class StarRating extends StatelessWidget {
   final double rating;
   final double size;
   final Color color;
 
-  StarRating({
+  const StarRating({
+    super.key,
     required this.rating,
     this.size = 10.0,
     this.color = Colors.amber,
@@ -46,7 +44,6 @@ class StarRating extends StatelessWidget {
     );
   }
 }
-
 
 class LawyerDetailPage extends StatefulWidget {
   LawyerDetailPage({
@@ -119,16 +116,16 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
     description = widget.description;
   }
 
-  getTestimonials() async{
-    final email = FirebaseAuth.instance.currentUser?.email;
+  getTestimonials() async {
+    // final email = FirebaseAuth.instance.currentUser?.email;
     final ref = await FirebaseFirestore.instance
-      .collection('lawyer')
-      .doc('aaryan3108@gmail.com')
-      .collection('testimonials')
-      .get();
+        .collection('lawyer')
+        .doc(lawyerEmail)
+        .collection('testimonials')
+        .get();
 
     List<Map<String, dynamic>> map = [];
-    for(var doc in ref.docs){
+    for (var doc in ref.docs) {
       map.add({
         "name": doc['name'],
         "review": doc['review'],
@@ -169,7 +166,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
             MaterialPageRoute(
               builder: (context) => UserRequestLawyer(
                 lawyerName: lawyerName,
-                lawyerEmail: "aaryan3108@gmail.com",
+                lawyerEmail: lawyerEmail,
               ),
             ),
           )
@@ -182,11 +179,13 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
               size: 20.0,
             ),
             SizedBox(height: 8.0),
-            Text("Request A Call",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 19, 19, 19),
-                  fontWeight: FontWeight.bold,
-                )),
+            Text(
+              "Request A Call",
+              style: TextStyle(
+                color: Color.fromARGB(255, 19, 19, 19),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),
@@ -213,7 +212,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
         // SizedBox(height: 30.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+          children: [
             // Expanded(flex: 1, child: levelIndicator),
             Expanded(
               flex: 2,
@@ -341,7 +340,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
 
     final bottomContentText = Column(
       // mainAxisAlignment:
-          // MainAxisAlignment.start, // Center the content vertically
+      // MainAxisAlignment.start, // Center the content vertically
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -372,7 +371,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height/2,
+          height: MediaQuery.of(context).size.height / 2,
           child: FutureBuilder(
             future: getTestimonials(),
             builder: (context, snapshot) {
@@ -389,7 +388,8 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                 return Text('No testimonial found for $lawyerName',
                     style: const TextStyle(color: Colors.red));
               } else {
-                List<Map<String, dynamic>>? testimonialList = snapshot.data as List<Map<String, dynamic>>?;
+                List<Map<String, dynamic>>? testimonialList =
+                    snapshot.data as List<Map<String, dynamic>>?;
                 return ListView.builder(
                   itemCount: testimonialList?.length,
                   itemBuilder: (context, index) {
@@ -399,83 +399,78 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                     final rating = testimonialList[index]["rating"];
 
                     return Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              margin: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.4), // Shadow color
-                                    spreadRadius: 3,
-                                    blurRadius: 7,
-                                    offset:
-                                        const Offset(0, 3), // Shadow position
-                                  ),
-                                ],
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey
+                                    .withOpacity(0.4), // Shadow color
+                                spreadRadius: 3,
+                                blurRadius: 7,
+                                offset: const Offset(0, 3), // Shadow position
                               ),
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                             Icons.account_box_sharp,
-                                            color: Color.fromARGB(255, 12, 12, 12),
-                                            size: 20.0,
-                                          ),
-                                          Text(
-                                            name,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15.0),
-                                          ),
-                                        ],
+                                      const Icon(
+                                        Icons.account_box_sharp,
+                                        color: Color.fromARGB(255, 12, 12, 12),
+                                        size: 20.0,
                                       ),
-                                       StarRating(
-                                            rating: rating.toDouble(), // Assuming rating is a double value
-                                            size: 20.0, // Adjust the size as needed
-                                            color: Colors.amber, // Choose the color you want for stars
-                                        ),
                                       Text(
-                                        "Review uploaded on: $date",
+                                        name,
                                         style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 15.0),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 8.0),
-                                        child: SizedBox(
-                                          width: 280,
-                                          child: Text(
-                                            "$review",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 13.0),
-                                          ),
-                                        ),
-                                      ),
-                                      
-                                      
-                                      const SizedBox(height: 10),
-                                          
                                     ],
                                   ),
-                                  
+                                  StarRating(
+                                    rating: rating
+                                        .toDouble(), // Assuming rating is a double value
+                                    size: 20.0, // Adjust the size as needed
+                                    color: Colors
+                                        .amber, // Choose the color you want for stars
+                                  ),
+                                  Text(
+                                    "Review uploaded on: $date",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15.0),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: SizedBox(
+                                      width: 280,
+                                      child: Text(
+                                        "$review",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w100,
+                                            fontSize: 13.0),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
                                 ],
                               ),
-                            ),
-                          ],
-                        );
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
                   },
                 );
               }
@@ -498,7 +493,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          children:[
+          children: [
             topContent,
             Expanded(
               child: SingleChildScrollView(

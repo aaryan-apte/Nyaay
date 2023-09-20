@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/pages/user/home/profile.dart';
 import 'package:nyaay/pages/user/home/view_appoinments.dart';
 // import 'package:flutter_ecommerce_ui_kit/blocks/auth_block.dart';
 import 'package:provider/provider.dart';
@@ -60,12 +61,12 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 leading: Icon(Icons.account_circle,
                     color: Theme.of(context).colorScheme.secondary),
-                title: Text('Profile'),
+                title: const Text('Profile'),
                 trailing: Text('New',
                     style: TextStyle(color: Theme.of(context).primaryColor)),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, '/shop');
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfile()));
                 },
               ),
               ListTile(

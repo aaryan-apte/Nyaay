@@ -186,9 +186,6 @@ class _LawyerListState extends State<LawyerList> {
                       final docID = lawyerList[index]["docID"];
                       final description = lawyerList[index]["description"];
                       final courts = lawyerList[index]["courts"];
-                      // final leaderBoard = lawyerList[index]['leaderBoard'];
-                      // final categories = lawyerList[index]['categories'];
-                      // print("Length: ${lawyerList.length}");
 
                       return GestureDetector(
                         onTap: () {
@@ -214,6 +211,7 @@ class _LawyerListState extends State<LawyerList> {
                               ),
                             ),
                           );
+                          print(docID);
                         },
                         child: Column(
                           children: [

@@ -1,6 +1,6 @@
 //ignore_for_file: ignore_const_preferences
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
@@ -32,26 +32,35 @@ class _RateReviewState extends State<RateReview> {
   }
 
   Future<void> sendReview(double rating) async {
-  String? userEmail = FirebaseAuth.instance.currentUser?.email;
+  // String? userEmail = FirebaseAuth.instance.currentUser?.email;
   final refL = FirebaseFirestore.instance
       .collection('lawyer')
-      .doc('aaryan3108@gmail.com') // lawyerEmail
-      .collection('testimonials');
+      .doc(lawyerEmail); // lawyerEmail
+      // .collection('testimonials');
 
   try {
-    await refL.add({
+    await refL.collection('testimonials').add({
       "review": requestController.text.trim(),
       "date": "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
       "time": "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
       "name": uname,
       "rating": rating, // Add the rating to the Firestore document
-    });
+    }).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Review added successfully with rating: $rating')))
+    ).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString()))));
+    } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+  }
 
-    // Optionally, you can print a success message here or perform other actions.
-    print('Review added successfully with rating: $rating');
-  } catch (e) {
-    // Handle errors gracefully, e.g., display a Snackbar with the error message.
-    print('Error adding review: $e');
+  try{
+    final toUpdate = await refL.get();
+    int cases = toUpdate.data()!['cases'];
+    num ratingOld = toUpdate.data()!['rating'];
+
+    num ratingNew = (cases*ratingOld + rating)/(cases + 1);
+    refL.set({"rating": ratingNew}).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Thank you for the review."))));
+
+  } catch(e){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
   }
 }
 
@@ -131,20 +140,20 @@ class _RateReviewState extends State<RateReview> {
                                         fontWeight: FontWeight.w500),
                                     textAlign: TextAlign.center,
                                   ),
-                                  
+
                                 ],
                               ),
                               const SizedBox(height: 20.0),
                               Container(
-                                
+
                                 child: RatingBar.builder(
                                   initialRating: 0,
                                   minRating: 1,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
                                   itemCount: 5,
-                                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                  itemBuilder: (context, _) => Icon(
+                                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                  itemBuilder: (context, _) => const Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
@@ -158,8 +167,8 @@ class _RateReviewState extends State<RateReview> {
 
                               ),
                               const SizedBox(height: 20.0),
-                              
-                              
+
+
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.4,
                                 child: TextField(
@@ -170,7 +179,7 @@ class _RateReviewState extends State<RateReview> {
                                       hintStyle:
                                           TextStyle(color: Color.fromARGB(97, 0, 0, 0))),
                                   // keyboardType: TextInputType,
-                                  cursorColor: Color.fromARGB(255, 137, 135, 135),
+                                  cursorColor: const Color.fromARGB(255, 137, 135, 135),
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 18, 18, 18), fontSize: 18.0),
                                 ),

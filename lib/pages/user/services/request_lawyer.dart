@@ -31,10 +31,9 @@ class _UserRequestLawyerState extends State<UserRequestLawyer> {
 
   sendRequest() async {
     String? userEmail = FirebaseAuth.instance.currentUser?.email;
-    // print(userEmail);
     final refL = FirebaseFirestore.instance
         .collection('lawyer')
-        .doc('aaryan3108@gmail.com') // lawyerEmail
+        .doc(lawyerEmail) // lawyerEmail
         .collection('requests');
 
     final refU = FirebaseFirestore.instance

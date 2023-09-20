@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,11 @@ import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 // import 'package:nyaay/pages/user/services/request_lawyer.dart';
 // import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
-import 'package:nyaay/pages/user/services/rate_review.dart';
+// import 'package:nyaay/pages/user/services/rate_review.dart';
 // import 'dart:math';
 
 class UserAppointments extends StatefulWidget {
-  const UserAppointments(
-      {super.key,
-      required this.userEmail});
+  const UserAppointments({super.key, required this.userEmail});
 
   final String userEmail;
 
@@ -28,52 +27,70 @@ class _UserAppointmentsState extends State<UserAppointments> {
   initState() {
     super.initState();
     userEmail = widget.userEmail;
-    
   }
 
   TextStyle textStyle =
       const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
   Future<List<Map<String, dynamic>>> getRequests(String userEmail) async {
-  List<Map<String, dynamic>> requestList = [];
+    List<Map<String, dynamic>> requestList = [];
 
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userEmail)
+          .collection('requests')
+          .get();
 
-  try {
-    //  to fetch data from the 'requests' collection
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> requestData = {
+          'email': doc['email'],
+          'date': doc['date'],
+          'time': doc['time'],
+          'name': doc['name'],
+          'phone': doc['phone'],
+          'request': doc['request'],
+          'status': doc['status'],
+          'lawyerName': doc['lawyerName'],
+          'lawyerEmail': doc['lawyerEmail'],
+        };
+
+        if (requestData['status'] == false) {
+          requestList.add(requestData);
+        }
+      }
+    } catch (e) {
+      throw ('Error fetching requests: $e');
+    }
+    return requestList;
+  }
+
+  deleteRequest(String lawyerEmail, String time) async{
+    final email = FirebaseAuth.instance.currentUser?.email;
+
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userEmail) // User's email is the document ID
+        .collection('lawyer')
+        .doc(lawyerEmail)
         .collection('requests')
+        .where('email', isEqualTo: email)
+        .where('time', isEqualTo: time)
         .get();
 
-    for (var doc in querySnapshot.docs) {
-      Map<String, dynamic> requestData = {
-        'email': doc['email'],
-        'date': doc['date'],
-        'time':doc['time'],
-        'name': doc['name'],
-        'phone': doc['phone'],
-        'request': doc['request'],
-        'status': doc['status'],
-        'lawyerName' : doc['lawyerName'],
-        'lawyerEmail' : doc['lawyerEmail'],
-        // Add more fields as needed
-      };
+    QuerySnapshot q = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(email)
+        .collection('requests')
+        .where('time', isEqualTo: time)
+        .get();
 
-
-      // Add requestData to the requestList if status is false
-      if (requestData['status'] == false) {
-        requestList.add(requestData);
-      }
+    for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+      await documentSnapshot.reference.delete();
     }
-  } catch (e) {
-    throw ('Error fetching requests: $e');
+
+    for (QueryDocumentSnapshot documentSnapshot in q.docs) {
+      await documentSnapshot.reference.delete();
+    }
   }
-  return requestList;
-}
-
-
-      
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +115,15 @@ class _UserAppointmentsState extends State<UserAppointments> {
               // width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(
-                      140, 142, 142, 142), // Set your desired background color here
+                  backgroundColor: const Color.fromARGB(140, 142, 142,
+                      142), // Set your desired background color here
                 ),
                 onPressed: () => {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                            builder: (context) => UserCAppointments(
-                              userEmail: userEmail
-                          ),
+                      builder: (context) =>
+                          UserCAppointments(userEmail: userEmail),
                     ),
                   )
                 },
@@ -123,7 +139,6 @@ class _UserAppointmentsState extends State<UserAppointments> {
                 ),
               ),
             ),
-            
           ],
         ),
       ),
@@ -151,18 +166,16 @@ class _UserAppointmentsState extends State<UserAppointments> {
                   return ListView.builder(
                     itemCount: requestList?.length,
                     itemBuilder: (context, index) {
-                      final name = requestList![index]["name"];
-                      final lawyerName = requestList[index]["lawyerName"];
+                      // final name = requestList![index]["name"];
+                      final lawyerName = requestList![index]["lawyerName"];
                       final lawyerEmail = requestList[index]["lawyerEmail"];
                       final request = requestList[index]["request"];
-                      final status = requestList[index]['status'];
+                      // final status = requestList[index]['status'];
                       final date = requestList[index]['date'];
                       final time = requestList[index]['time'];
 
                       return GestureDetector(
-                        onTap: () {
-                          
-                        },
+                        onTap: () {},
                         child: Column(
                           children: [
                             Container(
@@ -177,16 +190,13 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                         .withOpacity(0.4), // Shadow color
                                     spreadRadius: 3,
                                     blurRadius: 7,
-                                    offset:
-                                        const Offset(0, 3), // Shadow position
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
                               padding: const EdgeInsets.all(15.0),
                               child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -194,35 +204,37 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                       Row(
                                         children: [
                                           const Icon(
-                                             Icons.account_box_sharp,
-                                            color: Color.fromARGB(255, 12, 12, 12),
+                                            Icons.account_box_sharp,
+                                            color:
+                                                Color.fromARGB(255, 12, 12, 12),
                                             size: 20.0,
                                           ),
                                           Text(
-                                            lawyerName,
+                                            " Adv. $lawyerName",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 15.0),
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                             Icons.email,
-                                            color: Color.fromARGB(255, 12, 12, 12),
-                                            size: 20.0,
-                                          ),
-                                          Text(
-                                            lawyerEmail,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 15.0),
-                                          ),
-                                        ],
-                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     const Icon(
+                                      //        Icons.email,
+                                      //       color: Color.fromARGB(255, 12, 12, 12),
+                                      //       size: 20.0,
+                                      //     ),
+                                      //     Text(
+                                      //       lawyerEmail,
+                                      //       style: const TextStyle(
+                                      //           fontWeight: FontWeight.w100,
+                                      //           fontSize: 15.0),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 8.0),
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
                                         child: SizedBox(
                                           width: 320,
                                           child: Text(
@@ -234,17 +246,18 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                         ),
                                       ),
                                       Text(
-                                        "Requet sent on: $date at $time",
+                                        "Request sent on: $date at $time",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15.0),
                                       ),
-                                      
+
                                       const SizedBox(height: 10),
-                                          Row(
-                                            children: [
-                                              TextButton(
-                                              onPressed: () {
+                                      Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              deleteRequest(lawyerEmail, time);
                                               // Navigator.push(
                                               //   context,
                                               //   MaterialPageRoute(
@@ -254,49 +267,51 @@ class _UserAppointmentsState extends State<UserAppointments> {
                                               //     ),
                                               //   ),
                                               // );
-                                                },
-                                                child: Container(
-                                                      padding: const EdgeInsets.all(10.0),
-                                                      decoration: BoxDecoration(
-                                                          color: const Color.fromARGB(255, 197, 197, 197),
-                                                          borderRadius:
-                                                              BorderRadius.circular(10.0)),
-                                                      child: Text(
-                                                        "Mark as Done",
-                                                        style: textStyle,
-                                                      ),
-                                                ),
-                                              ),
-                                              TextButton(
-                                              onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => RateReview(
-                                                    lawyerName: lawyerName,
-                                                    lawyerEmail: lawyerEmail,
-                                                    uname: name,
-                                                  ),
-                                                ),
-                                              );
-                                        },
-                                        child: Container(
-                                              padding: const EdgeInsets.all(10.0),
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
                                               decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(255, 197, 197, 197),
+                                                  color: const Color.fromARGB(
+                                                      255, 197, 197, 197),
                                                   borderRadius:
-                                                      BorderRadius.circular(10.0)),
+                                                      BorderRadius.circular(
+                                                          10.0)),
                                               child: Text(
-                                                "Write a Review",
+                                                "Cancel Appointment",
                                                 style: textStyle,
                                               ),
-                                        ),
-                                       ),
-                                            ],
-                                          )
+                                            ),
+                                          ),
+                                          //        TextButton(
+                                          //        onPressed: () {
+                                          //        Navigator.push(
+                                          //          context,
+                                          //          MaterialPageRoute(
+                                          //            builder: (context) => RateReview(
+                                          //              lawyerName: lawyerName,
+                                          //              lawyerEmail: lawyerEmail,
+                                          //              uname: name,
+                                          //            ),
+                                          //          ),
+                                          //        );
+                                          //  },
+                                          //  child: Container(
+                                          //        padding: const EdgeInsets.all(10.0),
+                                          //        decoration: BoxDecoration(
+                                          //            color: const Color.fromARGB(255, 197, 197, 197),
+                                          //            borderRadius:
+                                          //                BorderRadius.circular(10.0)),
+                                          //        child: Text(
+                                          //          "Write a Review",
+                                          //          style: textStyle,
+                                          //        ),
+                                          //  ),
+                                          // ),
+                                        ],
+                                      )
                                     ],
                                   ),
-                                  
                                 ],
                               ),
                             ),
