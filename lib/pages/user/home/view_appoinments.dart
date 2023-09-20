@@ -1,16 +1,8 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/completed_appoinments.dart';
-// import 'package:nyaay/pages/user/services/request_lawyer.dart';
-// import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
-import 'package:nyaay/pages/user/home/drawer.dart';
-// import 'package:nyaay/pages/user/services/rate_review.dart';
-// import 'dart:math';
 
 class UserAppointments extends StatefulWidget {
   const UserAppointments({super.key, required this.userEmail});
@@ -40,6 +32,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
           .collection('users')
           .doc(userEmail)
           .collection('requests')
+          .where('status', isEqualTo: 0)
           .get();
 
       for (var doc in querySnapshot.docs) {
@@ -65,7 +58,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
     return requestList;
   }
 
-  deleteRequest(String lawyerEmail, String time) async{
+  deleteRequest(String lawyerEmail, String time) async {
     final email = FirebaseAuth.instance.currentUser?.email;
 
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -86,7 +79,6 @@ class _UserAppointmentsState extends State<UserAppointments> {
     for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
       await documentSnapshot.reference.delete();
     }
-
     for (QueryDocumentSnapshot documentSnapshot in q.docs) {
       await documentSnapshot.reference.delete();
     }
@@ -95,11 +87,8 @@ class _UserAppointmentsState extends State<UserAppointments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: AppDrawer(),
-      ),
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
+        // backgroundColor: Theme.of(context).colorScheme.secondary
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         elevation: 0, // Remove the shadow
         toolbarHeight: 100,
@@ -115,8 +104,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
               // width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(140, 142, 142,
-                      142), // Set your desired background color here
+                  backgroundColor: const Color.fromARGB(140, 142, 142, 142),
                 ),
                 onPressed: () => {
                   Navigator.push(
@@ -130,11 +118,13 @@ class _UserAppointmentsState extends State<UserAppointments> {
                 child: Row(
                   children: const [
                     SizedBox(height: 8.0),
-                    Text("View Past Requests",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 19, 19, 19),
-                          fontWeight: FontWeight.bold,
-                        )),
+                    Text(
+                      "View Past Requests",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 19, 19, 19),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -143,6 +133,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
         ),
       ),
       body: Center(
+        // child: Text("You have no pending appointments"),
         child: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.90,
@@ -173,6 +164,13 @@ class _UserAppointmentsState extends State<UserAppointments> {
                       // final status = requestList[index]['status'];
                       final date = requestList[index]['date'];
                       final time = requestList[index]['time'];
+
+                      // return const Center(
+                      //   child: Text(
+                      //     "No pending appointments.",
+                      //     style: TextStyle(color: Colors.black),
+                      //   ),
+                      // );
 
                       return GestureDetector(
                         onTap: () {},

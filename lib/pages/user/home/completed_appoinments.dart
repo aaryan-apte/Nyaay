@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';
@@ -8,12 +7,14 @@ import 'package:nyaay/pages/user/home/view_appoinments.dart';
 // import 'package:nyaay/pages/user/services/request_lawyer.dart';
 // import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'package:nyaay/pages/user/home/drawer.dart';
+
+import '../services/rate_review.dart';
 // import 'dart:math';
 
 class UserCAppointments extends StatefulWidget {
   const UserCAppointments({super.key, required this.userEmail});
 
-  final String userEmail;
+final String userEmail;
 
   @override
   State<UserCAppointments> createState() => _UserCAppointmentsState();
@@ -25,6 +26,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
   initState() {
     super.initState();
     userEmail = widget.userEmail;
+    // uname = widget.uname;
   }
 
   TextStyle textStyle =
@@ -34,11 +36,11 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
     List<Map<String, dynamic>> requestList = [];
 
     try {
-      //  to fetch data from the 'requests' collection
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userEmail) // User's email is the document ID
+          .doc(userEmail)
           .collection('requests')
+          .where('status', isEqualTo: true)
           .get();
 
       for (var doc in querySnapshot.docs) {
@@ -52,10 +54,8 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
           'status': doc['status'],
           'lawyerName': doc['lawyerName'],
           'lawyerEmail': doc['lawyerEmail'],
-          // Add more fields as needed
         };
 
-        // Add requestData to the requestList if status is false
         if (requestData['status'] == true) {
           requestList.add(requestData);
         }
@@ -69,18 +69,16 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: AppDrawer(),
-      ),
+      // drawer: Drawer(
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
+        // backgroundColor: Theme.of(context).colorScheme.secondary,
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         elevation: 0, // Remove the shadow
         toolbarHeight: 100,
         title: Row(
           children: [
             const Text(
-              'Requests',
+              'Past Requests',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             const SizedBox(width: 70.0),
@@ -89,8 +87,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
               // width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(140, 142, 142,
-                      142), // Set your desired background color here
+                  backgroundColor: const Color.fromARGB(140, 142, 142, 142),
                 ),
                 onPressed: () => {
                   Navigator.push(
@@ -135,18 +132,24 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                   return Text('Error: ${snapshot.error}',
                       style: const TextStyle(color: Colors.red));
                 } else if (!snapshot.hasData) {
-                  return const Text('No Requests made yet.',
-                      style: TextStyle(color: Colors.red));
+                  return const Text(
+                    'No Requests made yet.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 20.0,
+                    ),
+                  );
                 } else {
                   List<Map<String, dynamic>>? requestList = snapshot.data;
                   return ListView.builder(
                     itemCount: requestList?.length,
                     itemBuilder: (context, index) {
                       final name = requestList![index]["name"];
-                      final lawyerName = requestList[index]["lawyerName"];
+                      final lawyerName = requestList![index]["lawyerName"];
                       final lawyerEmail = requestList[index]["lawyerEmail"];
                       final request = requestList[index]["request"];
-                      final status = requestList[index]['status'];
+                      // final status = requestList[index]['status'];
                       final date = requestList[index]['date'];
                       final time = requestList[index]['time'];
 
@@ -183,8 +186,8 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                         children: [
                                           const Icon(
                                             Icons.account_box_sharp,
-                                            color: const Color.fromARGB(
-                                                255, 12, 12, 12),
+                                            color:
+                                                Color.fromARGB(255, 12, 12, 12),
                                             size: 20.0,
                                           ),
                                           Text(
@@ -195,26 +198,26 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.email,
-                                            color: const Color.fromARGB(
-                                                255, 12, 12, 12),
-                                            size: 20.0,
-                                          ),
-                                          Text(
-                                            lawyerEmail,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 15.0),
-                                          ),
-                                        ],
-                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     const Icon(
+                                      //       Icons.email,
+                                      //       color:
+                                      //           Color.fromARGB(255, 12, 12, 12),
+                                      //       size: 20.0,
+                                      //     ),
+                                      //     Text(
+                                      //       lawyerEmail,
+                                      //       style: const TextStyle(
+                                      //           fontWeight: FontWeight.w100,
+                                      //           fontSize: 15.0),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(top: 8.0),
-                                        child: Container(
+                                        child: SizedBox(
                                           width: 320,
                                           child: Text(
                                             "$request",
@@ -225,56 +228,43 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                                         ),
                                       ),
                                       Text(
-                                        "Requet sent on: $date at $time",
+                                        "Request sent on: $date at $time",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15.0),
                                       ),
                                       const SizedBox(height: 10),
                                       TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => RateReview(
+                                                lawyerName: lawyerName,
+                                                lawyerEmail: lawyerEmail,
+                                                uname: name,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                         child: Container(
                                           padding: const EdgeInsets.all(10.0),
                                           decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 197, 197, 197),
+                                              color: const Color.fromARGB(255, 197, 197, 197),
                                               borderRadius:
-                                                  BorderRadius.circular(10.0)),
+                                              BorderRadius.circular(10.0)),
                                           child: Text(
-                                            "Delete request",
+                                            "Write a Review",
                                             style: textStyle,
                                           ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
-                                  // TextButton(
-                                  //   onPressed: () {
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => UserRequestLawyer(
-                                  //           lawyerName: name,
-                                  //           lawyerEmail: "aaryan3108@gmail.com",
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  //   child: Container(
-                                  //     padding: const EdgeInsets.all(10.0),
-                                  //     decoration: BoxDecoration(
-                                  //         color: Colors.blue,
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(10.0)),
-                                  //     child: Text(
-                                  //       "Request a talk",
-                                  //       style: textStyle,
-                                  //     ),
-                                  //   ),
-                                  // )
                                 ],
                               ),
                             ),
+
                           ],
                         ),
                       );

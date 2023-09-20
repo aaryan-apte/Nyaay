@@ -78,9 +78,9 @@ class _UserRequestLawyerState extends State<UserRequestLawyer> {
     return SafeArea(
       
       child: Scaffold(
-        drawer: Drawer(
-        child: AppDrawer(),
-      ),
+      //   drawer: Drawer(
+      //   child: AppDrawer(),
+      // ),
       
         body: Container(
            decoration: const BoxDecoration(

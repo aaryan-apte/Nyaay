@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../home_pages_user/drawer.dart';
+
 class HomeL extends StatefulWidget {
   const HomeL({Key? key}) : super(key: key);
 
@@ -122,16 +124,15 @@ class _HomeLState extends State<HomeL> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: AppDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Center(
-            child: Text(
-              "Nyaay",
+          title: const Text(
+              "                         Nyaay",
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.w700,
               ),
-            ),
           ),
         ),
         backgroundColor: Colors.white,
@@ -177,7 +178,7 @@ class _HomeLState extends State<HomeL> {
                             } else if (snapshot.hasData == false) {
                               return const Text(
                                   'You have no upcoming appointments',
-                                  style: TextStyle(color: Colors.red));
+                                  style: TextStyle(color: Colors.white));
                             } else {
                               List<Map<String, dynamic>>? appointmentsList =
                               snapshot.data as List<Map<String, dynamic>>?;
