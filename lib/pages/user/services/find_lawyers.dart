@@ -90,9 +90,9 @@ class _LawyerListState extends State<LawyerList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: AppDrawer(),
-      ),
+      // drawer: Drawer(
+      //   child: AppDrawer(),
+      // ),
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
@@ -186,9 +186,6 @@ class _LawyerListState extends State<LawyerList> {
                       final docID = lawyerList[index]["docID"];
                       final description = lawyerList[index]["description"];
                       final courts = lawyerList[index]["courts"];
-                      // final leaderBoard = lawyerList[index]['leaderBoard'];
-                      // final categories = lawyerList[index]['categories'];
-                      // print("Length: ${lawyerList.length}");
 
                       return GestureDetector(
                         onTap: () {
@@ -214,6 +211,7 @@ class _LawyerListState extends State<LawyerList> {
                               ),
                             ),
                           );
+                          // print(docID);
                         },
                         child: Column(
                           children: [
