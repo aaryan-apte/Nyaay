@@ -4,6 +4,7 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nyaay/pages/user/home/appoinments.dart';
 import 'package:nyaay/pages/user/home/view_appoinments.dart';
 import 'package:nyaay/pages/user/services/arbitrators.dart';
 import 'package:nyaay/pages/user/services/lawyers.dart';
@@ -309,7 +310,7 @@ class _HomeUState extends State<HomeU> {
                         ),
                         child: const Text('View Appointments',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
+                                color: Color.fromARGB(255, 141, 27, 27),
                                 fontSize: 18)),
                         onPressed: () => {
                           // print(FirebaseAuth.instance.currentUser?.email),
@@ -317,7 +318,7 @@ class _HomeUState extends State<HomeU> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  UserAppointments(userEmail: userEmail),
+                                  Appointments(),
                             ),
                           ),
                         },
