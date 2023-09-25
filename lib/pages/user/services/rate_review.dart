@@ -1,9 +1,7 @@
 //ignore_for_file: ignore_const_preferences
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-// import 'package:nyaay/pages/user/home/drawer.dart';
 
 class RateReview extends StatefulWidget {
   RateReview(
@@ -80,11 +78,8 @@ class _RateReviewState extends State<RateReview> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //   drawer: Drawer(
-        //   child: AppDrawer(),
-        // ),
         appBar: AppBar(
-          // backgroundColor: Theme.of(context).colorScheme.secondary,// Customize the AppBar background color
+          // backgroundColor: Theme.of(context).colorScheme.secondary,
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           elevation: 0, // Remove the shadow
           toolbarHeight: 100,
@@ -154,25 +149,26 @@ class _RateReviewState extends State<RateReview> {
                               ),
                               const SizedBox(height: 20.0),
                               Container(
-                                  child: RatingBar.builder(
-                                initialRating: 0,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemPadding:
-                                    const EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
+                                child: RatingBar.builder(
+                                  initialRating: 0,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemPadding: const EdgeInsets.symmetric(
+                                      horizontal: 4.0),
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (newRating) {
+                                    setState(() {
+                                      rating = newRating;
+                                    });
+                                    print(newRating);
+                                  },
                                 ),
-                                onRatingUpdate: (newRating) {
-                                  setState(() {
-                                    rating = newRating;
-                                  });
-                                  print(newRating);
-                                },
-                              )),
+                              ),
                               const SizedBox(height: 20.0),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.4,
@@ -180,9 +176,11 @@ class _RateReviewState extends State<RateReview> {
                                   maxLines: 7,
                                   controller: requestController,
                                   decoration: const InputDecoration(
-                                      hintText: "Write Review",
-                                      hintStyle: TextStyle(
-                                          color: Color.fromARGB(97, 0, 0, 0))),
+                                    hintText: "Write Review",
+                                    hintStyle: TextStyle(
+                                      color: Color.fromARGB(97, 0, 0, 0),
+                                    ),
+                                  ),
                                   // keyboardType: TextInputType,
                                   cursorColor:
                                       const Color.fromARGB(255, 137, 135, 135),
