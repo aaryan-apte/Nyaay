@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,23 +13,22 @@ import '../services/rate_review.dart';
 // import 'dart:math';
 
 class UserCAppointments extends StatefulWidget {
-  const UserCAppointments({super.key, required this.userEmail});
+  const UserCAppointments({super.key});
 
-final String userEmail;
 
   @override
   State<UserCAppointments> createState() => _UserCAppointmentsState();
 }
 
 class _UserCAppointmentsState extends State<UserCAppointments> {
-  late String userEmail;
+
   @override
   initState() {
     super.initState();
-    userEmail = widget.userEmail;
     // uname = widget.uname;
   }
 
+  final email = FirebaseAuth.instance.currentUser?.email;
   TextStyle textStyle =
       const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
@@ -38,7 +38,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userEmail)
+          .doc(email)
           .collection('requests')
           .where('status', isEqualTo: true)
           .get();
@@ -90,7 +90,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.90,
             child: FutureBuilder(
-              future: getRequests(userEmail),
+              future: getRequests(email!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -116,7 +116,7 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
                     itemCount: requestList?.length,
                     itemBuilder: (context, index) {
                       final name = requestList![index]["name"];
-                      final lawyerName = requestList![index]["lawyerName"];
+                      final lawyerName = requestList[index]["lawyerName"];
                       final lawyerEmail = requestList[index]["lawyerEmail"];
                       final request = requestList[index]["request"];
                       // final status = requestList[index]['status'];

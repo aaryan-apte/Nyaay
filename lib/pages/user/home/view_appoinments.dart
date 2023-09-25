@@ -5,22 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 
 class UserAppointments extends StatefulWidget {
-  const UserAppointments({super.key, required this.userEmail});
-
-  final String userEmail;
+  const UserAppointments({super.key});
 
   @override
   State<UserAppointments> createState() => _UserAppointmentsState();
 }
 
 class _UserAppointmentsState extends State<UserAppointments> {
-  late String userEmail;
+
   @override
   initState() {
     super.initState();
-    userEmail = widget.userEmail;
   }
 
+  final email = FirebaseAuth.instance.currentUser?.email;
   TextStyle textStyle =
       const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
@@ -30,7 +28,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userEmail)
+          .doc(email)
           .collection('requests')
           .where('status', isEqualTo: 0)
           .get();
@@ -138,7 +136,7 @@ class _UserAppointmentsState extends State<UserAppointments> {
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.90,
             child: FutureBuilder(
-              future: getRequests(userEmail),
+              future: getRequests(email!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
