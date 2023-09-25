@@ -78,7 +78,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
         title: Row(
           children: [
             const Text(
-              'Leader Board                             ',
+              'Leader Board                    ',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             // SizedBox(height: 100.0),
