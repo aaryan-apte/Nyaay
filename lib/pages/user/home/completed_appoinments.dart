@@ -74,44 +74,14 @@ class _UserCAppointmentsState extends State<UserCAppointments> {
         // backgroundColor: Theme.of(context).colorScheme.secondary,
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         elevation: 0, // Remove the shadow
-        toolbarHeight: 100,
+        toolbarHeight: 70,
         title: Row(
           children: [
             const Text(
-              'Past Requests',
+              'Past Appointments',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            const SizedBox(width: 70.0),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              // width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(140, 142, 142, 142),
-                ),
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          UserAppointments(userEmail: userEmail),
-                    ),
-                  )
-                },
-                child: Row(
-                  children: const [
-                    SizedBox(height: 8.0),
-                    Text(
-                      "View Pending Requests",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 19, 19, 19),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            
           ],
         ),
       ),
