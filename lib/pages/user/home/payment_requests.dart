@@ -4,16 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 
-class UserAppointments extends StatefulWidget {
-  const UserAppointments({super.key, required this.userEmail});
+class PaymentRequests extends StatefulWidget {
+  const PaymentRequests({super.key, required this.userEmail});
 
   final String userEmail;
 
   @override
-  State<UserAppointments> createState() => _UserAppointmentsState();
+  State<PaymentRequests> createState() => _PaymentRequestsState();
 }
 
-class _UserAppointmentsState extends State<UserAppointments> {
+class _PaymentRequestsState extends State<PaymentRequests> {
   late String userEmail;
   @override
   initState() {
@@ -95,40 +95,9 @@ class _UserAppointmentsState extends State<UserAppointments> {
         title: Row(
           children: [
             const Text(
-              'Call Requests',
+              'Payment Requests',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            // const SizedBox(width: 70.0),
-            // Container(
-            //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-            //   // width: MediaQuery.of(context).size.width,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: const Color.fromARGB(140, 142, 142, 142),
-            //     ),
-            //     onPressed: () => {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) =>
-            //               UserCAppointments(userEmail: userEmail),
-            //         ),
-            //       )
-            //     },
-            //     child: Row(
-            //       children: const [
-            //         SizedBox(height: 8.0),
-            //         Text(
-            //           "View Past Requests",
-            //           style: TextStyle(
-            //             color: Color.fromARGB(255, 19, 19, 19),
-            //             fontWeight: FontWeight.bold,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
