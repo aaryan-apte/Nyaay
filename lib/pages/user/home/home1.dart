@@ -5,7 +5,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/appoinments.dart';
-import 'package:nyaay/pages/user/home/view_appoinments.dart';
+// import 'package:nyaay/pages/user/home/view_appoinments.dart';
 import 'package:nyaay/pages/user/services/arbitrators.dart';
 import 'package:nyaay/pages/user/services/lawyers.dart';
 import '../services/mediators.dart';

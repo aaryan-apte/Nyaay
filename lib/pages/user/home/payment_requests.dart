@@ -2,35 +2,37 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaay/pages/user/home/completed_appoinments.dart';
+// import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 
 class PaymentRequests extends StatefulWidget {
-  const PaymentRequests({super.key, required this.userEmail});
-
-  final String userEmail;
+  const PaymentRequests({super.key});
 
   @override
   State<PaymentRequests> createState() => _PaymentRequestsState();
 }
 
 class _PaymentRequestsState extends State<PaymentRequests> {
-  late String userEmail;
+  // late String userEmail;
   @override
   initState() {
     super.initState();
-    userEmail = widget.userEmail;
+    // userEmail = widget.userEmail;
   }
 
   TextStyle textStyle =
       const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
+  final email = FirebaseAuth.instance.currentUser?.email;
+
+  /////////////////////////////
+
   Future<List<Map<String, dynamic>>> getRequests(String userEmail) async {
     List<Map<String, dynamic>> requestList = [];
 
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      final querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userEmail)
+          .doc(email)
           .collection('requests')
           .where('status', isEqualTo: 0)
           .get();
@@ -47,13 +49,17 @@ class _PaymentRequestsState extends State<PaymentRequests> {
           'lawyerName': doc['lawyerName'],
           'lawyerEmail': doc['lawyerEmail'],
         };
-
-        if (requestData['status'] == false) {
-          requestList.add(requestData);
-        }
+        requestList.add(requestData);
       }
     } catch (e) {
-      throw ('Error fetching requests: $e');
+      rethrow;
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(
+      //       'Error fetching requests: $e',
+      //     ),
+      //   ),
+      // );
     }
     return requestList;
   }
@@ -93,8 +99,8 @@ class _PaymentRequestsState extends State<PaymentRequests> {
         elevation: 0, // Remove the shadow
         toolbarHeight: 70,
         title: Row(
-          children: [
-            const Text(
+          children: const [
+            Text(
               'Payment Requests',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
@@ -107,7 +113,7 @@ class _PaymentRequestsState extends State<PaymentRequests> {
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.90,
             child: FutureBuilder(
-              future: getRequests(userEmail),
+              future: getRequests(email!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -133,13 +139,6 @@ class _PaymentRequestsState extends State<PaymentRequests> {
                       // final status = requestList[index]['status'];
                       final date = requestList[index]['date'];
                       final time = requestList[index]['time'];
-
-                      // return const Center(
-                      //   child: Text(
-                      //     "No pending appointments.",
-                      //     style: TextStyle(color: Colors.black),
-                      //   ),
-                      // );
 
                       return GestureDetector(
                         onTap: () {},
@@ -245,7 +244,7 @@ class _PaymentRequestsState extends State<PaymentRequests> {
                                                       BorderRadius.circular(
                                                           10.0)),
                                               child: Text(
-                                                "Cancel Appointment",
+                                                "Proceed to Payment",
                                                 style: textStyle,
                                               ),
                                             ),
