@@ -1,11 +1,7 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:nyaay/pages/user/services/request_lawyer.dart';
 import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
-import 'package:nyaay/pages/user/home/drawer.dart';
 import 'dart:math';
 
 class LawyerList extends StatefulWidget {
@@ -13,22 +9,25 @@ class LawyerList extends StatefulWidget {
       {super.key,
       required this.state,
       required this.district,
-      required this.category});
+      required this.category,
+      required this.maxPrice});
 
   final String state, district, category;
-
+  final int maxPrice;
   @override
   State<LawyerList> createState() => _LawyerListState();
 }
 
 class _LawyerListState extends State<LawyerList> {
   late String state, district, category;
+  late int maxPrice;
   @override
   initState() {
     super.initState();
     district = widget.district;
     state = widget.state;
     category = widget.category;
+    maxPrice = widget.maxPrice;
   }
 
   TextStyle textStyle =
@@ -50,7 +49,7 @@ class _LawyerListState extends State<LawyerList> {
             .collection('lawyer')
             .where('state', isEqualTo: state)
             .where('district', isEqualTo: district)
-            // .where('hearingFees', isGreaterThanOrEqualTo: 12000)
+            .where('hearingFees', isLessThanOrEqualTo: maxPrice)
             .get();
       }
 
@@ -242,7 +241,7 @@ class _LawyerListState extends State<LawyerList> {
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/aaryan_photo2.jpg'), // Replace with your image path
+                                            'assets/images/adv1.webp'), // Replace with your image path
                                         fit: BoxFit
                                             .cover, // Adjust the fit as needed
                                       ),

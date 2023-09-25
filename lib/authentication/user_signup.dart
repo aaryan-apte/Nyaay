@@ -41,11 +41,11 @@ class _RegisterUserState extends State<RegisterUser> {
     await ref.set({
       "name": nameController.text.trim(),
       "email": emailController.text.trim(),
-      // "phone": phoneController.text.trim(),
+      "phone": phoneController.text.trim(),
       // "city": cityController.text.trim(),
       // "district": districtController.text.trim(),
       // "state": stateController.text.trim(),
-      "profession": professionController.text.trim()
+      // "profession": professionController.text.trim()
     });
   }
 
@@ -89,13 +89,13 @@ class _RegisterUserState extends State<RegisterUser> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 70,
+                  height: 130,
                 ),
                 SizedBox(
                   height: 45.0,
                 ),
                 Text(
-                  'Save More with MyMoney',
+                  'Welcome to Nyaay App! 🙏',
                   style: TextStyle(
                     fontFamily: 'CrimsonText',
                     // fontStyle: FontStyle.italic,
@@ -139,19 +139,19 @@ class _RegisterUserState extends State<RegisterUser> {
                         TextStyle(color: Colors.black54, fontSize: 18.0),
                   ),
                 ),
-                TextFormField(
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                  ),
-                  controller: professionController,
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                    labelText: "Profession",
-                    labelStyle:
-                        TextStyle(color: Colors.black54, fontSize: 18.0),
-                  ),
-                ),
+                // TextFormField(
+                //   style: TextStyle(
+                //     color: Colors.black,
+                //     fontSize: 20.0,
+                //   ),
+                //   controller: professionController,
+                //   cursorColor: Colors.white,
+                //   decoration: InputDecoration(
+                //     labelText: "Profession",
+                //     labelStyle:
+                //         TextStyle(color: Colors.black54, fontSize: 18.0),
+                //   ),
+                // ),
                 TextFormField(
                   style: TextStyle(
                     color: Colors.black,
