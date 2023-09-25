@@ -16,20 +16,20 @@ class Appointments extends StatefulWidget {
 
 class _AppointmentsState extends State<Appointments> {
   String userEmail = "";
-
-  Future<void> fetchUserEmail() async {
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        userEmail = user.email ?? 'No email available';
-      } else {
-        userEmail = 'No user is currently logged in';
-      }
-    } catch (e) {
-      // Handle any Firebase-related exceptions here
-      userEmail = 'Error: $e';
-    }
-  }
+  //
+  // Future<void> fetchUserEmail() async {
+  //   try {
+  //     User? user = FirebaseAuth.instance.currentUser;
+  //     if (user != null) {
+  //       userEmail = user.email ?? 'No email available';
+  //     } else {
+  //       userEmail = 'No user is currently logged in';
+  //     }
+  //   } catch (e) {
+  //     // Handle any Firebase-related exceptions here
+  //     userEmail = 'Error: $e';
+  //   }
+  // }
 
   
 
@@ -49,10 +49,9 @@ class _AppointmentsState extends State<Appointments> {
   @override
 
       List pages = [
-      PaymentRequests(userEmail: userEmail),
-      UserAppointments(userEmail: userEmail),
-      UserCAppointments(userEmail: userEmail),
-
+      const PaymentRequests(),
+      const UserAppointments(),
+      const UserCAppointments(),
     ];
 
 
@@ -63,7 +62,6 @@ class _AppointmentsState extends State<Appointments> {
         body: pages[currindex],
         bottomNavigationBar: BottomNavigationBar(
           unselectedFontSize: 0,
-          //selectedFontSize: 0,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           onTap: onTap,

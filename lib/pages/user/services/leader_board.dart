@@ -4,58 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/services/lawyer_detail_page.dart';
 import 'dart:math';
 
-class LawyerList extends StatefulWidget {
-  const LawyerList(
-      {super.key,
-      required this.state,
-      required this.district,
-      required this.category,
-      required this.maxPrice});
-
-  final String state, district, category;
-  final int maxPrice;
+class LeaderBoard extends StatefulWidget {
+  const LeaderBoard({super.key});
   @override
-  State<LawyerList> createState() => _LawyerListState();
+  State<LeaderBoard> createState() => _LeaderBoardState();
 }
 
-class _LawyerListState extends State<LawyerList> {
-  late String state, district, category;
-  late int maxPrice;
+class _LeaderBoardState extends State<LeaderBoard> {
+  // late String state, district, category;
+  // late int maxPrice;
   @override
   initState() {
     super.initState();
-    district = widget.district;
-    state = widget.state;
-    category = widget.category;
-    maxPrice = widget.maxPrice;
   }
 
   TextStyle textStyle =
-      const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
+  const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 15.0);
 
   Future<List<Map<String, dynamic>>> getLawyers() async {
     List<Map<String, dynamic>> lawyerList = [];
 
     try {
       QuerySnapshot querySnapshot;
+        querySnapshot = await FirebaseFirestore.instance
+            .collection('lawyer')
+            .where('state', isEqualTo: 'Maharashtra')
+            .get();
 
-      if (district == "Select a District") {
-        querySnapshot = await FirebaseFirestore.instance
-            .collection('lawyer')
-            .where('state', isEqualTo: state)
-            .get();
-      } else {
-        querySnapshot = await FirebaseFirestore.instance
-            .collection('lawyer')
-            .where('state', isEqualTo: state)
-            .where('district', isEqualTo: district)
-            .where('hearingFees', isLessThanOrEqualTo: maxPrice)
-            .get();
-      }
 
       for (var doc in querySnapshot.docs) {
-        for (var cat in doc['categories']) {
-          if (cat == category) {
+
             lawyerList.add({
               "name": doc['name'],
               "rating": doc['rating'],
@@ -69,8 +47,8 @@ class _LawyerListState extends State<LawyerList> {
               'description': doc['description'],
               'courts':doc['courts'],
             });
-          }
-        }
+
+
       }
 
       lawyerList.sort((a, b) => b['leaderBoard'].compareTo(a['leaderBoard']));
@@ -100,13 +78,13 @@ class _LawyerListState extends State<LawyerList> {
         title: Row(
           children: [
             const Text(
-              'Find Lawyers    ',
+              'Leader Board                             ',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             // SizedBox(height: 100.0),
             Column(
               mainAxisAlignment:
-                  MainAxisAlignment.center, // Center the content vertically
+              MainAxisAlignment.center, // Center the content vertically
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -119,7 +97,7 @@ class _LawyerListState extends State<LawyerList> {
                         size: 15.0, // Adjust the icon size as needed
                       ),
                       Text(
-                        '$district, $state',
+                        'Maharashtra, Thane',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -132,15 +110,15 @@ class _LawyerListState extends State<LawyerList> {
                 Padding(
                   padding: const EdgeInsets.only(left: 3.0),
                   child: Row(
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         Icons.work_outline,
                         color: Colors.white,
                         size: 15.0, // Adjust the icon size as needed
                       ),
                       Text(
-                        category,
-                        style: const TextStyle(
+                        "Criminal",
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                         ),
@@ -170,7 +148,7 @@ class _LawyerListState extends State<LawyerList> {
                   return Text('Error: ${snapshot.error}',
                       style: const TextStyle(color: Colors.red));
                 } else if (!snapshot.hasData) {
-                  return Text('No lawyers found in $district, $state.',
+                  return Text('No lawyers found in Maharashtra, Thane.',
                       style: const TextStyle(color: Colors.red));
                 } else {
                   List<Map<String, dynamic>>? lawyerList = snapshot.data;
@@ -185,6 +163,7 @@ class _LawyerListState extends State<LawyerList> {
                       final docID = lawyerList[index]["docID"];
                       final description = lawyerList[index]["description"];
                       final courts = lawyerList[index]["courts"];
+                      final cases = lawyerList[index]["cases"];
 
                       return GestureDetector(
                         onTap: () {
@@ -196,10 +175,10 @@ class _LawyerListState extends State<LawyerList> {
                                 courts: courts,
                                 lawyerName: name,
                                 lawyerEmail: docID,
-                                state: state,
-                                district: district,
+                                state: "Maharashtra",
+                                district: "Thane",
                                 rating: rating.toString(),
-                                  retainerFees: retainerFees.toString(),
+                                retainerFees: retainerFees.toString(),
                                 hearingFees: hearingFees.toString(),
                                 experience: experience.toString(),
                                 // lawyerRating: rating,
@@ -227,7 +206,7 @@ class _LawyerListState extends State<LawyerList> {
                                     spreadRadius: 3,
                                     blurRadius: 7,
                                     offset:
-                                        const Offset(0, 3), // Shadow position
+                                    const Offset(0, 3), // Shadow position
                                   ),
                                 ],
                               ),
@@ -241,7 +220,7 @@ class _LawyerListState extends State<LawyerList> {
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/adv2.jpeg'),
+                                            'assets/images/adv1.webp'), // Replace with your image path
                                         fit: BoxFit
                                             .cover, // Adjust the fit as needed
                                       ),
@@ -251,7 +230,7 @@ class _LawyerListState extends State<LawyerList> {
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         name,
@@ -260,7 +239,7 @@ class _LawyerListState extends State<LawyerList> {
                                             fontSize: 19.0),
                                       ),
                                       Text(
-                                        "Experience: $experience Years",
+                                        "Cases: $cases",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 19.0),

@@ -78,7 +78,6 @@ class _AppDrawerState extends State<AppDrawer> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => UserAppointments(
-                              userEmail: userEmail
                             ),
                           ),
                   ),
