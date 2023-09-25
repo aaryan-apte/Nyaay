@@ -45,7 +45,7 @@ class _MyLogin1State extends State<UserLogin> {
                     height: 45.0
                 ),
                 const Text(
-                  'Welcome to Nyaay...🙏',
+                  'Welcome back to Nyaay...🙏',
                   style: TextStyle(
                     fontFamily: 'CrimsonText',
                     // fontStyle: FontStyle.italic,
@@ -121,7 +121,7 @@ class _MyLogin1State extends State<UserLogin> {
                           color: Colors.black,
                           fontFamily: 'CrimsonText',
                           fontSize: 16),
-                      'New to us?  ',
+                      'New to Nyaay?  ',
                     ),
                     TextButton(
                       child: const Text(
