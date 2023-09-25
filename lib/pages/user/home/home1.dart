@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:nyaay/pages/user/home/view_appoinments.dart';
 import 'package:nyaay/pages/user/services/arbitrators.dart';
 import 'package:nyaay/pages/user/services/lawyers.dart';
-// import 'package:nyaay/localizations.dart';
-
 import '../services/mediators.dart';
 import '../services/notaries.dart';
 import 'drawer.dart';

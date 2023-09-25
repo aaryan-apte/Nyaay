@@ -299,7 +299,7 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
             height: MediaQuery.of(context).size.height * 0.5,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/aaryan_photo2.jpg'),
+                image: AssetImage('assets/images/adv2.jpeg'),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.only(
