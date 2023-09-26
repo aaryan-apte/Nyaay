@@ -51,7 +51,7 @@ class _UserRequestLawyerState extends State<UserRequestLawyer> {
             "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
         "time":
             "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
-        "handled" : false,
+        "status" : 0,
         "lawyerName": lawyerName,
       });
 
@@ -64,7 +64,7 @@ class _UserRequestLawyerState extends State<UserRequestLawyer> {
             "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
         "time":
             "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
-        "status": false,
+        "status": 0,
         "lawyerName": lawyerName,
         "lawyerEmail" : lawyerEmail,
       });

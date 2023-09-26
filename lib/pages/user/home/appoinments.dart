@@ -4,8 +4,7 @@ import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 import 'package:nyaay/pages/user/home/payment_requests.dart';
 import 'package:nyaay/pages/user/home/view_appoinments.dart';
 
-
-Color PrimaryColor = Color(0xff3f51b5);
+const Color PrimaryColor = Color(0xff3f51b5);
 
 class Appointments extends StatefulWidget {
   const Appointments({Key? key}) : super(key: key);
@@ -54,9 +53,8 @@ class _AppointmentsState extends State<Appointments> {
       const UserCAppointments(),
     ];
 
-
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: pages[currindex],

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:nyaay/authentication/first_screen.dart';
 import 'package:nyaay/pages/home_pages_service/home_service.dart';
 import 'package:nyaay/pages/user/home/home1.dart';
-// import '../pages/home_pages_user/home.dart';
 
 class AuthStart extends StatelessWidget {
   const AuthStart({Key? key}) : super(key: key);

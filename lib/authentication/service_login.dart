@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaay/authentication/first_screen.dart';
+import 'package:nyaay/authentication/service_signup.dart';
 import 'package:nyaay/authentication/willpop_checker_user.dart';
 import 'package:nyaay/pages/lawyer/home/home2.dart';
 
@@ -128,7 +129,7 @@ class _MyLogin1State extends State<ServiceLogin> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeL(),
+                          builder: (context) => const ServiceSignup(),
                         ),
                       );
                     },
