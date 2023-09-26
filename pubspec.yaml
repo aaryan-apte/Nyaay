@@ -53,6 +53,8 @@ flutter:
     - assets/i18n/ar.json
     - assets/images/drawer-header.jpg
     - assets/images/
+    - assets/images/paytm_logo.jpg
+    - assets/images/phonepe_logo.png
 
   fonts:
     - family: CrimsonText

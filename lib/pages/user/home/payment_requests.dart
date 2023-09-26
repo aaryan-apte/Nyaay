@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../services/payment_page.dart';
 // import 'package:nyaay/pages/user/home/completed_appoinments.dart';
 
 class PaymentRequests extends StatefulWidget {
@@ -220,10 +222,40 @@ class _PaymentRequestsState extends State<PaymentRequests> {
 
                                       const SizedBox(height: 10),
                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           TextButton(
                                             onPressed: () {
                                               deleteRequest(lawyerEmail, time);
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) => UserRequestLawyer(
+                                              //       lawyerName: name,
+                                              //       lawyerEmail: "aaryan3108@gmail.com",
+                                              //     ),
+                                              //   ),
+                                              // );
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 197, 197, 197),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                              child: Text(
+                                                "Cancel Request",
+                                                style: textStyle,
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentPage(lawyerEmail)));
                                               // Navigator.push(
                                               //   context,
                                               //   MaterialPageRoute(
